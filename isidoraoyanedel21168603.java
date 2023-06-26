@@ -64,7 +64,11 @@ public class isidoraoyanedel21168603 {
         }
     }
 
-    public void logout
+    public void logout (){
+        logueados.clear();
+    }
+
+    
 
     @Override
     public String toString() {

@@ -28,5 +28,13 @@ public class Main {
         filesystem.login("User2");
         System.out.println(filesystem);
 
+        filesystem.logout();
+        System.out.println(filesystem);
+
+        filesystem.register("User2"); //no repite usuario
+        System.out.println(filesystem);
+
+        filesystem.login("User2");
+        System.out.println(filesystem);
     }
 }
