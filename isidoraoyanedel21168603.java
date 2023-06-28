@@ -119,7 +119,7 @@ public class isidoraoyanedel21168603 {
                         .collect(Collectors.toList());
         if (!currentChapters.contains(chaptername)) {
             var tamano = ruta.size()-1;
-            rutaruta.rutaSTRING = ruta.get(0).rutaSTRING + "chao";
+            rutaruta.rutaSTRING = ruta.get(0).rutaSTRING;
             rutaruta.carpeta.add(carpeta1);
             rutaruta.usuariocarpeta.add(logueados);
             ruta.add(rutaruta);
