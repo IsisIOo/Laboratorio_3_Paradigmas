@@ -113,7 +113,7 @@ public class isidoraoyanedel21168603 {
                 ruta1.carpeta.stream()
                 .map(Chapter::getNombre)
                 .collect(Collectors.toList());
-        ruta1.usuariocarpeta = (getLogueados().get(0));
+        ruta1.usuariocarpeta = (getLogueados().get(0)); //obtiene solo el string
         ruta1.rutaSTRING = actual.get(0) + ":/"; //con get0 agarra solo la letra
         //ruta1.carpeta= ;
         ruta.add(ruta1);
