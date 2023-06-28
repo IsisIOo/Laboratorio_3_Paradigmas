@@ -31,5 +31,9 @@ public class Path {
                 ", fechaCreacion=" + fechaCreacion +
                 '}';
     }
+
+    public List<Chapter> getCarpeta() {
+        return carpeta;
+    }
 }
 

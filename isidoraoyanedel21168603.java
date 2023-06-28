@@ -133,19 +133,38 @@ public class isidoraoyanedel21168603 {
     //no puedo tener mas de un drive
     public void mkdir(String chaptername){
         var rutaruta = new Path();
+        var tamano = ruta.size()-1;
         var carpeta1 = new Chapter(chaptername);
         var currentChapters =
-                rutaruta.carpeta.stream()
+                ruta.get(tamano).carpeta.stream()
                         .map(Chapter::getNombre)
                         .collect(Collectors.toList());
         if (!currentChapters.contains(chaptername)) {
-            var tamano = ruta.size()-1;
+
 
             rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING; //pq cuando agrego adops se devuelve a c?
             rutaruta.carpeta.addAll(ruta.get(tamano).carpeta);
             rutaruta.carpeta.add(carpeta1);//agrega la carpeta a las carpetas, quiero que se agregue a las que habian antes
             rutaruta.usuariocarpeta = getLogueados().get(0);
             ruta.add(rutaruta);
+        }
+    }
+
+    public void cd (String camino_seleccionado){
+        var rutaruta = new Path();
+        var tamano = ruta.size()-1;
+        var currentChapters =
+                ruta.get(tamano).getCarpeta().stream()
+                        .map(Chapter::getNombre)
+                        .collect(Collectors.toList());
+
+        //otros if de los comodines
+        if (currentChapters.contains(camino_seleccionado)){
+            rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + camino_seleccionado + "/";
+            rutaruta.usuariocarpeta = getLogueados().get(0);
+            ruta.add(rutaruta);
+
+
         }
     }
 

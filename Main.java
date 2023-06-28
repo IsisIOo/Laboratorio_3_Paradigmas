@@ -70,5 +70,14 @@ public class Main {
         filesystem.switchDrive("E");
         System.out.println(filesystem);
 
+        filesystem.mkdir("EADO");
+        System.out.println(filesystem);
+
+        filesystem.cd("EADO");
+        System.out.println(filesystem);
+
+        filesystem.mkdir("gfafa");
+        System.out.println(filesystem);
+
     }
 }
