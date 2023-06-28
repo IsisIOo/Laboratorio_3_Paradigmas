@@ -8,9 +8,7 @@ import java.util.stream.Collectors;
 public class isidoraoyanedel21168603 {
     //esta cosa es sistema
     String nombre;
-
     Date fechaCreacrion;
-
     List<Drive> drives;
     List<Usuario> usuarios;
     List<String> logueados;
@@ -115,6 +113,16 @@ public class isidoraoyanedel21168603 {
                 .collect(Collectors.toList());
         ruta1.usuariocarpeta = (getLogueados().get(0)); //obtiene solo el string
         ruta1.rutaSTRING = actual.get(0) + ":/"; //con get0 agarra solo la letra
+        var rutasderutas =
+                ruta.stream()
+                        .filter(rutas->rutas.rutaSTRING.equals(actual.get(0) + ":/"))
+                        .collect(Collectors.toList());
+
+        if(rutasderutas.size()>1){
+            var tamano2 = rutasderutas.size()-1;
+            ruta1.carpeta.addAll(rutasderutas.get(tamano2).carpeta);
+        }
+
         //ruta1.carpeta= ;
         ruta.add(ruta1);
 
@@ -132,7 +140,9 @@ public class isidoraoyanedel21168603 {
                         .collect(Collectors.toList());
         if (!currentChapters.contains(chaptername)) {
             var tamano = ruta.size()-1;
-            rutaruta.rutaSTRING = ruta.get(0).rutaSTRING; //pq cuando agrego adops se devuelve a c?
+
+            rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING; //pq cuando agrego adops se devuelve a c?
+            rutaruta.carpeta.addAll(ruta.get(tamano).carpeta);
             rutaruta.carpeta.add(carpeta1);//agrega la carpeta a las carpetas, quiero que se agregue a las que habian antes
             rutaruta.usuariocarpeta = getLogueados().get(0);
             ruta.add(rutaruta);

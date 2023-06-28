@@ -61,5 +61,14 @@ public class Main {
         filesystem.mkdir("ADOPS");
         System.out.println(filesystem);
 
+        filesystem.mkdir("EADO");
+        System.out.println(filesystem);
+
+        filesystem.switchDrive("C");
+        System.out.println(filesystem);
+
+        filesystem.switchDrive("E");
+        System.out.println(filesystem);
+
     }
 }
