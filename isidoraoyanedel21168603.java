@@ -14,6 +14,13 @@ public class isidoraoyanedel21168603 {
     List<Drive> drives;
     List<Usuario> usuarios;
     List<String> logueados;
+    List<String> actual;
+
+
+    //List<String> carpeta;
+
+    List<Path> ruta;
+
 
 
     //RF3 CONSTRUCTOR DE FILESYSTEM
@@ -25,6 +32,8 @@ public class isidoraoyanedel21168603 {
         this.drives = new ArrayList<>(); //asumir que es asi
         this.usuarios = new ArrayList<>();
         this.logueados = new ArrayList<>();
+        this.actual = new ArrayList<>();
+        this.ruta = new ArrayList<>();
     }
 
     //RF4 TDA SYSTEM - ADD DRIVE
@@ -42,7 +51,9 @@ public class isidoraoyanedel21168603 {
 
     }
 
-
+    //RF5 TDA SYSTEM - REGISTER
+    //Dom: userName (String)
+    //no puedo tener usuarios repetidos
     public void register(String nombre) {
         var user = new Usuario(nombre);
         var currentUsers =
@@ -54,6 +65,13 @@ public class isidoraoyanedel21168603 {
         }
     }
 
+    public List<String> getLogueados() {
+        return logueados;
+    }
+
+    //RF6 TDA SYSTEM - LOGIN
+    //Dom: userName (String)
+    //no puedo tener mas de un usuario
     public void login(String nombre) {
         var currentUsers =
                 usuarios.stream()
@@ -64,11 +82,52 @@ public class isidoraoyanedel21168603 {
         }
     }
 
+    //RF7 TDA SYSTEM - LOGOUT
+    //Dom: void
+
     public void logout (){
         logueados.clear();
     }
 
-    
+    //RF8 TDA SYSTEM - LOGIN
+    //Dom: userName (String)
+    //no puedo tener mas de un drive
+    public void switchDrive(String letter){
+        var currentLetters =
+                drives.stream()
+                        .map(Drive::getLetter)
+                        .collect(Collectors.toList());
+        if (currentLetters.contains(letter) && !logueados.isEmpty()) {
+            actual.add(letter);
+        }
+        var ruta1 = new Path();
+        ruta1.usuariocarpeta.add(getLogueados());
+        ruta1.rutaSTRING = actual.get(0) + ":/";
+        ruta.add(ruta1);
+
+    }
+
+    //RF9 TDA SYSTEM - mkDir
+    //Dom: userName (String)
+    //no puedo tener mas de un drive
+    public void mkdir(String chaptername){
+        var rutaruta = new Path();
+        var carpeta1 = new Chapter(chaptername);
+        var currentChapters =
+                rutaruta.carpeta.stream()
+                        .map(Chapter::getNombre)
+                        .collect(Collectors.toList());
+        if (!currentChapters.contains(chaptername)) {
+            var tamano = ruta.size()-1;
+            rutaruta.rutaSTRING = ruta.get(0).rutaSTRING + "chao";
+            rutaruta.carpeta.add(carpeta1);
+            rutaruta.usuariocarpeta.add(logueados);
+            ruta.add(rutaruta);
+
+        }
+    }
+
+
 
     @Override
     public String toString() {
@@ -78,7 +137,13 @@ public class isidoraoyanedel21168603 {
                 ", drives=" + drives +
                 ", usuarios=" + usuarios +
                 ", logueados=" + logueados +
+                ", actual=" + actual +
+                ", ruta=" + ruta +
                 '}';
+    }
+
+    public List<String> getActual() {
+        return actual;
     }
 }
 

@@ -7,6 +7,7 @@ import java.nio.file.FileSystem;
 public class Main {
     public static void main(String[] args) {
         var filesystem = new isidoraoyanedel21168603("mi sistema");
+        var pathpath = new Path();
         System.out.println(filesystem);
 
         filesystem.addDrive("D", "Oveja", 400 );
@@ -36,5 +37,23 @@ public class Main {
 
         filesystem.login("User2");
         System.out.println(filesystem);
+
+        //filesystem.logout(); //NO HACE SWITCH DRIVE SI ESTÁ ESTE TROZO
+        //System.out.println(filesystem);
+
+        filesystem.switchDrive("C");
+        System.out.println(filesystem);
+
+        filesystem.mkdir("hola");
+        System.out.println(filesystem);
+
+        //filesystem.logout();
+        //System.out.println(filesystem);
+
+        //filesystem.login("User1"); //cambia el usuario que está dentro de la ruta
+        //System.out.println(filesystem);
+
+        System.out.println(filesystem);
+
     }
 }
