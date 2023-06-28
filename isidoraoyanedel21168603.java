@@ -86,6 +86,7 @@ public class isidoraoyanedel21168603 {
     //Dom: void
 
     public void logout (){
+
         logueados.clear();
     }
 
@@ -97,12 +98,24 @@ public class isidoraoyanedel21168603 {
                 drives.stream()
                         .map(Drive::getLetter)
                         .collect(Collectors.toList());
+
         if (currentLetters.contains(letter) && !logueados.isEmpty()) {
-            actual.add(letter);
+            if(actual.isEmpty()){
+                actual.add(letter);
+            }
+            if(!actual.isEmpty()){
+                actual.clear();
+                actual.add(letter);
+            }
         }
         var ruta1 = new Path();
-        ruta1.usuariocarpeta.add(getLogueados());
-        ruta1.rutaSTRING = actual.get(0) + ":/";
+        var currentChapters =
+                ruta1.carpeta.stream()
+                .map(Chapter::getNombre)
+                .collect(Collectors.toList());
+        ruta1.usuariocarpeta = (getLogueados().get(0));
+        ruta1.rutaSTRING = actual.get(0) + ":/"; //con get0 agarra solo la letra
+        //ruta1.carpeta= ;
         ruta.add(ruta1);
 
     }
@@ -119,13 +132,15 @@ public class isidoraoyanedel21168603 {
                         .collect(Collectors.toList());
         if (!currentChapters.contains(chaptername)) {
             var tamano = ruta.size()-1;
-            rutaruta.rutaSTRING = ruta.get(0).rutaSTRING;
-            rutaruta.carpeta.add(carpeta1);
-            rutaruta.usuariocarpeta.add(logueados);
+            rutaruta.rutaSTRING = ruta.get(0).rutaSTRING; //pq cuando agrego adops se devuelve a c?
+            rutaruta.carpeta.add(carpeta1);//agrega la carpeta a las carpetas, quiero que se agregue a las que habian antes
+            rutaruta.usuariocarpeta = getLogueados().get(0);
             ruta.add(rutaruta);
-
         }
     }
+
+
+
 
 
 

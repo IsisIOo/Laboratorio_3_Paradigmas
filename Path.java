@@ -10,14 +10,14 @@ public class Path {
     String rutaSTRING;
     List<Chapter> carpeta;
     //List<String> archivo;
-    List<List<String>>  usuariocarpeta;
+    String  usuariocarpeta;
     Date fechaCreacion;
 
     public Path() {
         this.fechaCreacion = new Date();
         this.rutaSTRING =  rutaSTRING;
         this.carpeta = new ArrayList<>();
-        this.usuariocarpeta = new ArrayList<>();
+        this.usuariocarpeta = usuariocarpeta;
 
     }
 

@@ -55,5 +55,11 @@ public class Main {
 
         System.out.println(filesystem);
 
+        filesystem.switchDrive("E");
+        System.out.println(filesystem);
+
+        filesystem.mkdir("ADOPS");
+        System.out.println(filesystem);
+
     }
 }
