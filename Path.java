@@ -9,7 +9,7 @@ public class Path {
 
     String rutaSTRING;
     List<Chapter> carpeta;
-    //List<String> archivo;
+    //List<File> archivo;
     String  usuariocarpeta;
     Date fechaCreacion;
 

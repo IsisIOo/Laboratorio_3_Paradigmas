@@ -112,10 +112,11 @@ public class isidoraoyanedel21168603 {
                 .map(Chapter::getNombre)
                 .collect(Collectors.toList());
         ruta1.usuariocarpeta = (getLogueados().get(0)); //obtiene solo el string
-        ruta1.rutaSTRING = actual.get(0) + ":/"; //con get0 agarra solo la letra
+        var drive_minuscula = actual.get(0).toLowerCase();
+        ruta1.rutaSTRING = drive_minuscula + ":/"; //con get0 agarra solo la letra
         var rutasderutas =
                 ruta.stream()
-                        .filter(rutas->rutas.rutaSTRING.equals(actual.get(0) + ":/"))
+                        .filter(rutas->rutas.rutaSTRING.equals(actual.get(0).toLowerCase() + ":/"))
                         .collect(Collectors.toList());
 
         if(rutasderutas.size()>1){
@@ -158,12 +159,40 @@ public class isidoraoyanedel21168603 {
                         .map(Chapter::getNombre)
                         .collect(Collectors.toList());
 
-        //otros if de los comodines
+        //otros if de los comodines LSITOS
+        if (camino_seleccionado == "././././" || camino_seleccionado == "." || camino_seleccionado == "./"){
+            rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
+            rutaruta.usuariocarpeta = getLogueados().get(0);
+            rutaruta.carpeta = ruta.get(tamano).carpeta;
+            //agregar archivos, rutaruta.
+            ruta.add(rutaruta);
+        }
         if (currentChapters.contains(camino_seleccionado)){
             rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + camino_seleccionado + "/";
             rutaruta.usuariocarpeta = getLogueados().get(0);
+            //AGREGAR ARCHIVOS
             ruta.add(rutaruta);
 
+
+
+        }
+
+        if(camino_seleccionado == "/"){ //regresa a la raiz de la unidad
+            String[] raiz_unidad = ruta.get(tamano).rutaSTRING.split("/");
+            var raiz_unidad1 = raiz_unidad[0];
+            //hacer if que si raiz_ unidad0 = actual con / obtenga las carpetas o algo asi
+            var filtro_raicesUnidad =
+                    ruta.stream()
+                            .filter(rutas->rutas.rutaSTRING.equals(actual.get(0).toLowerCase() + ":/")) //rutas=creado aqui
+                            .collect(Collectors.toList());
+
+            if(filtro_raicesUnidad.size()>1) {
+                var tamano2 = filtro_raicesUnidad.size() - 1;
+                rutaruta.carpeta.addAll(filtro_raicesUnidad.get(tamano2).carpeta);
+                rutaruta.rutaSTRING = raiz_unidad1 + "/";
+                rutaruta.usuariocarpeta = getLogueados().get(0);
+                ruta.add(rutaruta);
+            }
 
         }
     }

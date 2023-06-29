@@ -79,5 +79,17 @@ public class Main {
         filesystem.mkdir("gfafa");
         System.out.println(filesystem);
 
+        filesystem.cd("/");
+        System.out.println(filesystem);
+
+        filesystem.switchDrive("C");
+        System.out.println(filesystem);
+
+        filesystem.cd("hola");
+        System.out.println(filesystem);
+
+        filesystem.cd("/");
+        System.out.println(filesystem);
+
     }
 }
