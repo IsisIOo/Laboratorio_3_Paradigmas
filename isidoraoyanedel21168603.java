@@ -33,6 +33,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         this.logueados = new ArrayList<>();
         this.actual = new ArrayList<>();
         this.ruta = new ArrayList<>();
+        System.out.println("Se ha creado el sistema con éxito.");
     }
 
     //RF4 TDA SYSTEM - ADD DRIVE
@@ -78,6 +79,10 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                         .collect(Collectors.toList());
         if (currentUsers.contains(nombre) && logueados.isEmpty()) {
             logueados.add(nombre);
+            System.out.println("El usuario ha iniciado sesión correctamente.");
+        }
+        else{
+            System.out.println("No existe el usuario ingresado.");
         }
     }
 
@@ -227,7 +232,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         }
     }
 
-    
+
 
 
 
