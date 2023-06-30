@@ -103,5 +103,10 @@ public class Main {
         filesystem.cd("feo thomi");
         System.out.println(filesystem);
 
+        filesystem.cd("..");
+        System.out.println(filesystem);
+
+
+
     }
 }

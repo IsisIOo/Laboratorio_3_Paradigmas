@@ -1,6 +1,6 @@
 package org.example;
 
-public class Chapter {
+public class Chapter implements Interfaz_chapter_ioyanedel_21168603{
     String nombre;
 
     public Chapter(String nombre) {
