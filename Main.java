@@ -88,7 +88,19 @@ public class Main {
         filesystem.cd("hola");
         System.out.println(filesystem);
 
-        filesystem.cd("/");
+        //filesystem.cd("/"); //funciona
+        //System.out.println(filesystem);
+
+        filesystem.mkdir("feo thomi");
+        System.out.println(filesystem);
+
+        filesystem.mkdir("dinosaurio");
+        System.out.println(filesystem);
+
+        filesystem.mkdir("t-rex");
+        System.out.println(filesystem);
+
+        filesystem.cd("feo thomi");
         System.out.println(filesystem);
 
     }

@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -167,6 +168,7 @@ public class isidoraoyanedel21168603 {
             //agregar archivos, rutaruta.
             ruta.add(rutaruta);
         }
+        //caso normal
         if (currentChapters.contains(camino_seleccionado)){
             rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + camino_seleccionado + "/";
             rutaruta.usuariocarpeta = getLogueados().get(0);
@@ -177,6 +179,7 @@ public class isidoraoyanedel21168603 {
 
         }
 
+        //caso de cuando quiere devolverse a la raiz recupera las cosas de la raiz
         if(camino_seleccionado == "/"){ //regresa a la raiz de la unidad
             String[] raiz_unidad = ruta.get(tamano).rutaSTRING.split("/");
             var raiz_unidad1 = raiz_unidad[0];
@@ -186,13 +189,36 @@ public class isidoraoyanedel21168603 {
                             .filter(rutas->rutas.rutaSTRING.equals(actual.get(0).toLowerCase() + ":/")) //rutas=creado aqui
                             .collect(Collectors.toList());
 
-            if(filtro_raicesUnidad.size()>1) {
+            if(filtro_raicesUnidad.size()>1) { //recupera y asigna luego del filtro
                 var tamano2 = filtro_raicesUnidad.size() - 1;
                 rutaruta.carpeta.addAll(filtro_raicesUnidad.get(tamano2).carpeta);
                 rutaruta.rutaSTRING = raiz_unidad1 + "/";
                 rutaruta.usuariocarpeta = getLogueados().get(0);
                 ruta.add(rutaruta);
             }
+
+            //caso de regresar a la anterior
+            if(camino_seleccionado == ".."){
+                var borrar_ultimo = ruta.get(tamano).rutaSTRING.split("/"); //hace lista de string[]
+                var largototal = borrar_ultimo.length-1;
+                String[] copiaderutasinultimoelem = Arrays.copyOf(borrar_ultimo, largototal);
+                String nuevaruta = String.join("/", copiaderutasinultimoelem);
+                rutaruta.rutaSTRING = nuevaruta;
+                var filtro_buscandoRutas =
+                        ruta.stream()
+                                .filter(rutas ->rutas.rutaSTRING.equals(nuevaruta));
+                                .collect(Collectors.toList());
+
+                rutaruta.carpeta =;
+                rutaruta.usuariocarpeta = getLogueados().get(0);
+
+
+
+
+
+
+            }
+            //caso de cuando entra en una carpeta dentro de una carpeta
 
         }
     }
