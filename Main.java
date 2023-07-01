@@ -118,6 +118,9 @@ public class Main {
             filesystem.crea_file();
             System.out.println(filesystem);
 
+            filesystem.crea_file();
+            System.out.println(filesystem);
+
 
 
 

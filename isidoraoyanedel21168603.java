@@ -279,11 +279,15 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 System.out.print("\n2. .pdf");
                 int tipoDoc = documentos.nextInt();
                 //sistema.addDrive(letra_drive, nombre_drive, capacidad);
-                if(tipoDoc ==1){
+                if(tipoDoc == 1){
                     tipode1 = ".docx";
                 }
-                else{
+                if(tipoDoc == 2){
                     tipode1 = ".pdf";
+                }
+                else{
+                    System.out.println("Esa opción no está disponible");
+                    
                 }
                 break;
 
@@ -301,8 +305,11 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 if(tipoCodfuente == 2){
                     tipode1 = ".java";
                 }
-                else{
+                if(tipoCodfuente == 3){
                     tipode1 = ".pl";
+                }
+                else{
+                    System.out.println("Esa opción no está disponible");
                 }
                 break;}
 
@@ -323,8 +330,11 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         if(tiposeg == 1){
             seg1 = "oculto";
         }
-        else{
+        if(tiposeg == 2){
             seg1 = "";
+        }
+        else{
+            System.out.println("Esa opción no está disponible.");
         }
 
         //int oculto = seguridad.nextInt(); //cuando opcion elegida es integer
@@ -338,25 +348,99 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         if (lecture == 1){
              seg2 = "solo lectura";
         }
-        else{
+        if(lecture ==2){
              seg2 = "";
+        }
+        else{
+            System.out.println("Esa opción no está disponible.");
         }
 
         var newFile = new File(nombre_de_archivo, tipode1, content_de_archivo, seg2, seg1);
         addFile(newFile);
     }
 
+    public void crea_fileCaso2(String content_de_archivo, String seg1, String seg2){
+        Scanner extension_texto = new Scanner(System.in);
+        System.out.println("------Elija el tipo de archivo que desea crear------");
+        System.out.println("1. Archivo de texto.");
+        System.out.println("2. Documento.");
+        System.out.println("3. Codigo fuente.");
+        int archivo_elegido = extension_texto.nextInt(); //cuando opcion elegida es integer
+        String tipode1 = "";
+
+        switch (archivo_elegido){
+            case 1:
+                //Scanner datos = new Scanner(System.in);
+                //System.out.print("");
+                //System.out.print("Ingrese el nombre del drive: ");
+                //System.out.print("Ingrese el almacenamiento del drive: ");
+                //int txt = datos.nextInt();
+                //sistema.addDrive(letra_drive, nombre_drive, capacidad);
+                tipode1 = ".txt";
+                break;
+
+            case 2:
+                Scanner documentos = new Scanner(System.in);
+                System.out.print("---Seleccione que tipo de documento que desea---\n");
+                System.out.print("1. .docx");
+                System.out.print("\n2. .pdf");
+                int tipoDoc = documentos.nextInt();
+                //sistema.addDrive(letra_drive, nombre_drive, capacidad);
+                if(tipoDoc ==1){
+                    tipode1 = ".docx";
+                }
+                if(tipoDoc ==2){
+                    tipode1 = ".pdf";
+                }
+                else{
+                    System.out.println("Esa opción no está disponible.");
+                }
+                break;
+
+            case 3:
+                Scanner codfuente = new Scanner(System.in);
+                System.out.print("---Seleccione que tipo de codigo fuente que desea---\n");
+                System.out.print("1. .python");
+                System.out.print("\n2. .java");
+                System.out.print("\n3. .pl");
+                int tipoCodfuente = codfuente.nextInt();
+                //sistema.addDrive(letra_drive, nombre_drive, capacidad);
+                if(tipoCodfuente ==1){
+                    tipode1 = ".python";
+                }
+                if(tipoCodfuente == 2){
+                    tipode1 = ".java";
+                }
+                if(tipoCodfuente ==3 ){
+                    tipode1 = ".pl";
+                }
+                else{
+                    System.out.println("Esa opción no está disponible.");
+                }
+                break;
+        }
+
+        Scanner titulo_Archivo = new Scanner(System.in);
+        System.out.print("Ingrese el titulo de su archivo:");
+        String nombre_de_archivo =titulo_Archivo.nextLine();
+        var newFile = new File(nombre_de_archivo, tipode1, content_de_archivo, seg2, seg1);
+        addFile(newFile);
+    }
+
+
 
     public void addFile(File archivo){
+        var lecturas = archivo.getAtributo_lect();
+        var seguridad = archivo.getAtributo_Seg();
+        var contenidos= archivo.getContenido();
         var rutaruta = new Path();
         var tamano = ruta.size()-1;
         var currentFiles =
                 ruta.get(tamano).archivo.stream()
                         .map(File::getNombre)
                         .collect(Collectors.toList());
-        if (!currentFiles.contains(archivo)){
+        if (!currentFiles.contains(archivo.getNombre())){
             rutaruta.archivo.add(archivo);
-            rutaruta.carpeta = ruta.get(tamano).carpeta;
             rutaruta.carpeta = ruta.get(tamano).carpeta;
             rutaruta.usuariocarpeta= getLogueados().get(0);
             rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
@@ -365,6 +449,8 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         }
         else{
             System.out.println("ya existe un archivo con ese Titulo, ingrese otro titulo y extensión.\n");
+            crea_fileCaso2(contenidos, seguridad, lecturas);
+
         }
 
 

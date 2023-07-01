@@ -31,4 +31,16 @@ public class Ioyanedel_21168603_Herencia_de_Archivo {
     public String getNombre() {
         return nombre;
     }
+
+    public String getAtributo_Seg() {
+        return atributo_Seg;
+    }
+
+    public String getAtributo_lect() {
+        return atributo_lect;
+    }
+
+    public String getContenido() {
+        return contenido;
+    }
 }
