@@ -1,9 +1,6 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
@@ -15,8 +12,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
     List<String> logueados;
     List<String> actual;
 
-
-    //List<String> carpeta;
+    //List<Chapter> carpeta; //lo estoy usando en path
 
     List<Path> ruta;
 
@@ -113,25 +109,39 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             }
         }
         var ruta1 = new Path();
-        var currentChapters =
-                ruta1.carpeta.stream()
-                .map(Chapter::getNombre)
-                .collect(Collectors.toList());
-        ruta1.usuariocarpeta = (getLogueados().get(0)); //obtiene solo el string
-        var drive_minuscula = actual.get(0).toLowerCase();
-        ruta1.rutaSTRING = drive_minuscula + ":/"; //con get0 agarra solo la letra
-        var rutasderutas =
-                ruta.stream()
-                        .filter(rutas->rutas.rutaSTRING.equals(actual.get(0).toLowerCase() + ":/"))
-                        .collect(Collectors.toList());
+        var tamano = ruta.size()-1;
+        if(tamano > 1){
 
-        if(rutasderutas.size()>1){
-            var tamano2 = rutasderutas.size()-1;
-            ruta1.carpeta.addAll(rutasderutas.get(tamano2).carpeta);
+            var currentChapters =
+                    ruta.get(tamano).carpeta.stream()
+                            .map(Chapter::getNombre)
+                            .collect(Collectors.toList());
+            ruta1.usuariocarpeta = (getLogueados().get(0)); //obtiene solo el string
+            var drive_minuscula = actual.get(0).toLowerCase();
+            ruta1.rutaSTRING = drive_minuscula + ":/"; //con get0 agarra solo la letra
+            var rutasderutas =
+                    ruta.stream()
+                            .filter(rutas->rutas.rutaSTRING.equals(actual.get(0).toLowerCase() + ":/"))
+                            .collect(Collectors.toList());
+
+            if(rutasderutas.size()>1){
+                var tamano2 = rutasderutas.size()-1;
+                ruta1.carpeta.addAll(rutasderutas.get(tamano2).carpeta);
+            }
+
+            //ruta1.carpeta= ;
+            ruta.add(ruta1);
+        }
+        else{
+           ruta1.rutaSTRING = actual.get(0).toLowerCase() + ":/";
+           ruta1.usuariocarpeta = getLogueados().get(0);
+           //var carpetas = new ArrayList<>();
+           //var archivos = new ArrayList<>();
+           //ruta1.carpeta = carpetas;
+           ruta.add(ruta1);
         }
 
-        //ruta1.carpeta= ;
-        ruta.add(ruta1);
+
 
     }
 
@@ -147,9 +157,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                         .map(Chapter::getNombre)
                         .collect(Collectors.toList());
         if (!currentChapters.contains(chaptername)) {
-
-
-            rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING; //pq cuando agrego adops se devuelve a c?
+            rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
             rutaruta.carpeta.addAll(ruta.get(tamano).carpeta);
             rutaruta.carpeta.add(carpeta1);//agrega la carpeta a las carpetas, quiero que se agregue a las que habian antes
             rutaruta.usuariocarpeta = getLogueados().get(0);
@@ -173,15 +181,26 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             //agregar archivos, rutaruta.
             ruta.add(rutaruta);
         }
+
         //caso normal
         if (currentChapters.contains(camino_seleccionado)){
             rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + camino_seleccionado + "/";
             rutaruta.usuariocarpeta = getLogueados().get(0);
             //AGREGAR ARCHIVOS
             ruta.add(rutaruta);
+        }
 
-
-
+//caso /.folder1
+        if(camino_seleccionado.contains("./")){
+            String [] titulo_texto_sinbarra = camino_seleccionado.split("./");
+            var tituloreal = titulo_texto_sinbarra[1];
+            String total = String.join("", tituloreal);
+            if(currentChapters.contains(total)){
+                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + total + "/";
+                rutaruta.usuariocarpeta = getLogueados().get(0);
+                //AGREGAR ARCHIVOS
+                ruta.add(rutaruta);
+            }
         }
 
         //caso de cuando quiere devolverse a la raiz recupera las cosas de la raiz
@@ -219,18 +238,142 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             if (filtro_buscandoRutas.size() >= 1) {
                 var tamano3 = filtro_buscandoRutas.size() - 1;
                 rutaruta.rutaSTRING = nuevarutaReArmada;
+                rutaruta.archivo.addAll((filtro_buscandoRutas.get(tamano3).archivo));
                 rutaruta.carpeta.addAll((filtro_buscandoRutas.get(tamano3).carpeta));
                 rutaruta.usuariocarpeta = getLogueados().get(0);
                 ruta.add(rutaruta);
+
             }
             else {
-                rutaruta.rutaSTRING = nuevarutaReArmada;
-                rutaruta.carpeta.addAll((filtro_buscandoRutas.get(0).carpeta));
-                rutaruta.usuariocarpeta = getLogueados().get(0);
-                ruta.add(rutaruta);
+            System.out.println("Ya ha llegado a la raiz de la unidad");
             }
         }
     }
+
+    //recopila datos de file y cuando recupile los junte coon var y que entre
+
+    public void crea_file(){
+        Scanner extension_texto = new Scanner(System.in);
+        System.out.println("------Elija el tipo de archivo que desea crear------");
+        System.out.println("1. Archivo de texto.");
+        System.out.println("2. Documento.");
+        System.out.println("3. Codigo fuente.");
+        int archivo_elegido = extension_texto.nextInt(); //cuando opcion elegida es integer
+        String tipode1 = "";
+
+        switch (archivo_elegido){
+            case 1:
+                //Scanner datos = new Scanner(System.in);
+                //System.out.print("");
+                //System.out.print("Ingrese el nombre del drive: ");
+                //System.out.print("Ingrese el almacenamiento del drive: ");
+                //int txt = datos.nextInt();
+                //sistema.addDrive(letra_drive, nombre_drive, capacidad);
+                tipode1 = ".txt";
+                break;
+
+            case 2:
+                Scanner documentos = new Scanner(System.in);
+                System.out.print("---Seleccione que tipo de documento que desea---\n");
+                System.out.print("1. .docx");
+                System.out.print("\n2. .pdf");
+                int tipoDoc = documentos.nextInt();
+                //sistema.addDrive(letra_drive, nombre_drive, capacidad);
+                if(tipoDoc ==1){
+                    tipode1 = ".docx";
+                }
+                else{
+                    tipode1 = ".pdf";
+                }
+                break;
+
+            case 3:
+                Scanner codfuente = new Scanner(System.in);
+                System.out.print("---Seleccione que tipo de codigo fuente que desea---");
+                System.out.print("1. .python");
+                System.out.print("2. .java");
+                System.out.print("3. .pl");
+                int tipoCodfuente = codfuente.nextInt();
+                //sistema.addDrive(letra_drive, nombre_drive, capacidad);
+                if(tipoCodfuente ==1){
+                    tipode1 = ".python";
+                }
+                if(tipoCodfuente == 2){
+                    tipode1 = ".java";
+                }
+                else{
+                    tipode1 = ".pl";
+                }
+                break;}
+
+        Scanner titulo_Archivo = new Scanner(System.in);
+        System.out.print("Ingrese el titulo de su archivo:");
+        String nombre_de_archivo =titulo_Archivo.nextLine();
+
+        Scanner contenido_archivo = new Scanner(System.in);
+        System.out.print("Ingrese el contenido de su archivo:");
+        String content_de_archivo =contenido_archivo.nextLine();
+
+        Scanner seguridad = new Scanner(System.in);
+        System.out.println("¿Desea que su archivo esté oculto?");
+        System.out.println("1. Si.");
+        System.out.println("2. No.");
+        int tiposeg = seguridad.nextInt();
+        String seg1="";
+        if(tiposeg == 1){
+            seg1 = "oculto";
+        }
+        else{
+            seg1 = "";
+        }
+
+        //int oculto = seguridad.nextInt(); //cuando opcion elegida es integer
+
+        Scanner lectura = new Scanner(System.in);
+        System.out.println("¿Desea que su archivo sea de solo lectura?");
+        System.out.println("1. Si.");
+        System.out.println("2. No.");
+        int lecture = lectura.nextInt();
+        String seg2 = "";
+        if (lecture == 1){
+             seg2 = "solo lectura";
+        }
+        else{
+             seg2 = "";
+        }
+
+        var newFile = new File(nombre_de_archivo, tipode1, content_de_archivo, seg2, seg1);
+        addFile(newFile);
+    }
+
+
+    public void addFile(File archivo){
+        var rutaruta = new Path();
+        var tamano = ruta.size()-1;
+        var currentFiles =
+                ruta.get(tamano).archivo.stream()
+                        .map(File::getNombre)
+                        .collect(Collectors.toList());
+        if (!currentFiles.contains(archivo)){
+            rutaruta.archivo.add(archivo);
+            rutaruta.carpeta = ruta.get(tamano).carpeta;
+            rutaruta.carpeta = ruta.get(tamano).carpeta;
+            rutaruta.usuariocarpeta= getLogueados().get(0);
+            rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
+            //AGREGAR ARCHIVOS
+            ruta.add(rutaruta);
+        }
+        else{
+            System.out.println("ya existe un archivo con ese Titulo, ingrese otro titulo y extensión.\n");
+        }
+
+
+
+
+
+    }
+
+
 
 
 

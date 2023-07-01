@@ -7,12 +7,12 @@ import java.nio.file.FileSystem;
 public class Main {
     public static void main(String[] args) {
 
-        menu_ioyanedel_21168603 menu = new menu_ioyanedel_21168603();
+        /*menu_ioyanedel_21168603 menu = new menu_ioyanedel_21168603();
         while (!menu.isSalirmenu()) {
-            menu.executedemenu();
+            menu.executedemenu();}*/
 
 
-         /*   var filesystem = new isidoraoyanedel21168603("mi sistema");
+            var filesystem = new isidoraoyanedel21168603("mi sistema");
             var pathpath = new Path();
             System.out.println(filesystem);
 
@@ -110,9 +110,16 @@ public class Main {
             System.out.println(filesystem);
 
             filesystem.cd("..");
-            System.out.println(filesystem);*/
+            System.out.println(filesystem);
+
+            //filesystem.cd("./dinosaurio");
+            //System.out.println(filesystem);
+
+            filesystem.crea_file();
+            System.out.println(filesystem);
+
+
 
 
         }
     }
-}

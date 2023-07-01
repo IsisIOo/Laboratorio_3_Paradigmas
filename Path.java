@@ -9,16 +9,21 @@ public class Path {
 
     String rutaSTRING;
     List<Chapter> carpeta;
-    //List<File> archivo;
+    List<File> archivo;
     String  usuariocarpeta;
     Date fechaCreacion;
 
     public Path() {
-        this.fechaCreacion = new Date();
-        this.rutaSTRING =  rutaSTRING;
+        this.rutaSTRING = rutaSTRING;
         this.carpeta = new ArrayList<>();
+        this.archivo = new ArrayList<>();
         this.usuariocarpeta = usuariocarpeta;
+        this.fechaCreacion = new Date();
+    }
 
+
+    public List<Chapter> getCarpeta() {
+        return carpeta;
     }
 
 
@@ -27,13 +32,10 @@ public class Path {
         return "Path{" +
                 "rutaSTRING='" + rutaSTRING + '\'' +
                 ", carpeta=" + carpeta +
-                ", usuariocarpeta=" + usuariocarpeta +
+                ", archivo=" + archivo +
+                ", usuariocarpeta='" + usuariocarpeta + '\'' +
                 ", fechaCreacion=" + fechaCreacion +
                 '}';
-    }
-
-    public List<Chapter> getCarpeta() {
-        return carpeta;
     }
 }
 
