@@ -287,7 +287,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 }
                 else{
                     System.out.println("Esa opción no está disponible");
-                    
+                    //agregar que se reinicie la pregunta
                 }
                 break;
 
