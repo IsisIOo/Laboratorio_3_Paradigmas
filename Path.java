@@ -37,5 +37,9 @@ public class Path {
                 ", fechaCreacion=" + fechaCreacion +
                 '}';
     }
+
+    public List<File> getArchivo() {
+        return archivo;
+    }
 }
 

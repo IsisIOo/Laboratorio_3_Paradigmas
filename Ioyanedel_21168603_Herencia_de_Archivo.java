@@ -43,4 +43,8 @@ public class Ioyanedel_21168603_Herencia_de_Archivo {
     public String getContenido() {
         return contenido;
     }
+
+    public String getExtension() {
+        return extension;
+    }
 }

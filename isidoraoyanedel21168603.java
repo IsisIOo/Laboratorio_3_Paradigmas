@@ -286,20 +286,19 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                     tipode1 = ".pdf";
                 }
                 else{
-                    System.out.println("Esa opción no está disponible");
+                    System.out.println("Esa opción no está disponible.");
                     //agregar que se reinicie la pregunta
                 }
                 break;
 
             case 3:
                 Scanner codfuente = new Scanner(System.in);
-                System.out.print("---Seleccione que tipo de codigo fuente que desea---");
+                System.out.print("---Seleccione que tipo de codigo fuente que desea---\n");
                 System.out.print("1. .python");
-                System.out.print("2. .java");
-                System.out.print("3. .pl");
+                System.out.print("\n2. .java");
+                System.out.print("\n3. .pl");
                 int tipoCodfuente = codfuente.nextInt();
-                //sistema.addDrive(letra_drive, nombre_drive, capacidad);
-                if(tipoCodfuente ==1){
+                if(tipoCodfuente == 1){
                     tipode1 = ".python";
                 }
                 if(tipoCodfuente == 2){
@@ -405,7 +404,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 System.out.print("\n3. .pl");
                 int tipoCodfuente = codfuente.nextInt();
                 //sistema.addDrive(letra_drive, nombre_drive, capacidad);
-                if(tipoCodfuente ==1){
+                if(tipoCodfuente == 1){
                     tipode1 = ".python";
                 }
                 if(tipoCodfuente == 2){
@@ -440,7 +439,9 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                         .map(File::getNombre)
                         .collect(Collectors.toList());
         if (!currentFiles.contains(archivo.getNombre())){
+            var archivos_actuales = getRuta().get(tamano).getArchivo();
             rutaruta.archivo.add(archivo);
+            rutaruta.archivo.addAll(archivos_actuales);
             rutaruta.carpeta = ruta.get(tamano).carpeta;
             rutaruta.usuariocarpeta= getLogueados().get(0);
             rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
@@ -452,12 +453,37 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             crea_fileCaso2(contenidos, seguridad, lecturas);
 
         }
-
-
-
-
-
     }
+
+    public void del(String path){
+        //caso archivo
+        //if(path.contains('.')) {
+            var rutaruta = new Path();
+            var tamano = ruta.size() - 1;
+            var currentFiles =
+                    ruta.get(tamano).archivo.stream()
+                            .map(File::getNombre)
+                            .collect(Collectors.toList());
+            if (currentFiles.contains(path)) {
+                var filtro_buscandoTITULOSRutas =
+                        ruta.get(tamano).archivo.stream()
+                                .filter(rutas -> !rutas.getNombre().equals(path))
+                                .collect(Collectors.toList());
+                rutaruta.carpeta = ruta.get(tamano).carpeta;
+                rutaruta.usuariocarpeta = getLogueados().get(0);
+                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
+                rutaruta.archivo = filtro_buscandoTITULOSRutas;
+                ruta.add(rutaruta);
+            }
+            else{
+                System.out.println("Eel archivo no existe.");
+
+            }
+        }
+
+
+
+
 
 
 
@@ -484,6 +510,10 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
     public List<String> getActual() {
         return actual;
+    }
+
+    public List<Path> getRuta() {
+        return ruta;
     }
 }
 
