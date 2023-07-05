@@ -122,7 +122,7 @@ public class Main {
             filesystem.crea_file();
             System.out.println(filesystem);
 
-            filesystem.del("pollo");
+            filesystem.del(".");
             System.out.println(filesystem);
 
 

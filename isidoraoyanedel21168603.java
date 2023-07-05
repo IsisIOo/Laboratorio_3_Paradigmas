@@ -282,7 +282,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 if(tipoDoc == 1){
                     tipode1 = ".docx";
                 }
-                if(tipoDoc == 2){
+                else if(tipoDoc == 2){
                     tipode1 = ".pdf";
                 }
                 else{
@@ -301,10 +301,10 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 if(tipoCodfuente == 1){
                     tipode1 = ".python";
                 }
-                if(tipoCodfuente == 2){
+                else if(tipoCodfuente == 2){
                     tipode1 = ".java";
                 }
-                if(tipoCodfuente == 3){
+                else if(tipoCodfuente == 3){
                     tipode1 = ".pl";
                 }
                 else{
@@ -347,7 +347,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         if (lecture == 1){
              seg2 = "solo lectura";
         }
-        if(lecture ==2){
+        else if(lecture ==2){
              seg2 = "";
         }
         else{
@@ -388,7 +388,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 if(tipoDoc ==1){
                     tipode1 = ".docx";
                 }
-                if(tipoDoc ==2){
+                else if(tipoDoc ==2){
                     tipode1 = ".pdf";
                 }
                 else{
@@ -407,10 +407,10 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 if(tipoCodfuente == 1){
                     tipode1 = ".python";
                 }
-                if(tipoCodfuente == 2){
+                else if(tipoCodfuente == 2){
                     tipode1 = ".java";
                 }
-                if(tipoCodfuente ==3 ){
+                else if(tipoCodfuente ==3 ){
                     tipode1 = ".pl";
                 }
                 else{
@@ -464,6 +464,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                     ruta.get(tamano).archivo.stream()
                             .map(File::getNombre)
                             .collect(Collectors.toList());
+
             if (currentFiles.contains(path)) {
                 var filtro_buscandoTITULOSRutas =
                         ruta.get(tamano).archivo.stream()
@@ -475,10 +476,35 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 rutaruta.archivo = filtro_buscandoTITULOSRutas;
                 ruta.add(rutaruta);
             }
-            else{
-                System.out.println("Eel archivo no existe.");
+
+            //caso extensión
+            if(!path.isEmpty() && path.contains("."))  {
+                var filtro_buscandoEXTENSIONRutas =
+                        ruta.get(tamano).archivo.stream()
+                                .filter(rutas -> !rutas.getExtension().equals(path))
+                                .collect(Collectors.toList());
+                rutaruta.carpeta = ruta.get(tamano).carpeta;
+                rutaruta.usuariocarpeta = getLogueados().get(0);
+                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
+                rutaruta.archivo = filtro_buscandoEXTENSIONRutas;
+                ruta.add(rutaruta);
 
             }
+            if(path == "." || path == "*"){
+                rutaruta.carpeta = ruta.get(tamano).carpeta;
+                rutaruta.usuariocarpeta = getLogueados().get(0);
+                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
+                rutaruta.archivo.clear();
+                ruta.add(rutaruta);
+            }
+
+
+            else{
+                System.out.println("No hay ningun archivo que cumpla esas condiciones.");
+            }
+
+
+
         }
 
 
