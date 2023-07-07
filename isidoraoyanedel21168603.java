@@ -200,15 +200,24 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         }
 
 //caso /.folder1
-        if(camino_seleccionado.contains("./")){
-            String [] titulo_texto_sinbarra = camino_seleccionado.split("./");
-            var tituloreal = titulo_texto_sinbarra[1];
-            String total = String.join("", tituloreal);
-            if(currentChapters.contains(total)){
-                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + total + "/";
-                rutaruta.usuariocarpeta = getLogueados().get(0);
-                //AGREGAR ARCHIVOS
-                ruta.add(rutaruta); //NO C QUE PASA
+        if(camino_seleccionado.contains("./")) {
+            String[] titulo_texto_sinbarra = camino_seleccionado.split("./"); //quita el ./
+            var tituloreal = titulo_texto_sinbarra[1]; //obtiene el titulo string sin ./ desde la lista
+            String total = String.join("", tituloreal); //convierte la lista en string
+
+            if (currentChapters.contains(total)) { //busca el titulo string
+                var filtro_buscandoRutasBARRA =
+                        ruta.stream()
+                                .filter(rutas -> rutas.rutaSTRING.equals(ruta.get(tamano).rutaSTRING + total + "/"))
+                                .collect(Collectors.toList());
+                if (filtro_buscandoRutasBARRA.size() >= 1) {
+                    var tamano3 = filtro_buscandoRutasBARRA.size() - 1;
+                    rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + total + "/";
+                    rutaruta.archivo.addAll((filtro_buscandoRutasBARRA.get(tamano3).archivo));
+                    rutaruta.carpeta.addAll((filtro_buscandoRutasBARRA.get(tamano3).carpeta));
+                    rutaruta.usuariocarpeta = getLogueados().get(0);
+                    ruta.add(rutaruta);
+                }
             }
         }
 
