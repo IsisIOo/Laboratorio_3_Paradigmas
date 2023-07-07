@@ -122,11 +122,8 @@ public class Main {
             filesystem.crea_file();
             System.out.println(filesystem);
 
-            filesystem.del(".");
+            filesystem.del(".pdf");
             System.out.println(filesystem);
-
-
-
 
         }
     }

@@ -478,7 +478,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             }
 
             //caso extensión
-            if(!path.isEmpty() && path.contains("."))  {
+            /*if(!path.isEmpty() && path.contains("."))  {
                 var filtro_buscandoEXTENSIONRutas =
                         ruta.get(tamano).archivo.stream()
                                 .filter(rutas -> !rutas.getExtension().equals(path))
@@ -489,7 +489,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 rutaruta.archivo = filtro_buscandoEXTENSIONRutas;
                 ruta.add(rutaruta);
 
-            }
+            }*/
             if(path == "." || path == "*"){
                 rutaruta.carpeta = ruta.get(tamano).carpeta;
                 rutaruta.usuariocarpeta = getLogueados().get(0);
@@ -498,10 +498,43 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 ruta.add(rutaruta);
             }
 
+            String[] titulo_separado = path.split("\\.");
+            var largo = titulo_separado.length;
+            var tituloTitulo = titulo_separado[0];
+            var extensionTitulo = titulo_separado[1];
 
-            else{
-                System.out.println("No hay ningun archivo que cumpla esas condiciones.");
+            //caso de titulo.extension
+            if(largo == 2 && !tituloTitulo.equals("")) {
+                if (currentFiles.contains(tituloTitulo)) {
+                    var filtro_buscandoTITULOSRutas =
+                            ruta.get(tamano).archivo.stream()
+                                    .filter(rutas -> !rutas.getNombre().equals(tituloTitulo) && !rutas.getExtension().equals(extensionTitulo))
+                                    .collect(Collectors.toList());
+                    rutaruta.carpeta = ruta.get(tamano).carpeta;
+                    rutaruta.usuariocarpeta = getLogueados().get(0);
+                    rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
+                    rutaruta.archivo = filtro_buscandoTITULOSRutas;
+                    ruta.add(rutaruta);
+                }
             }
+
+            //caso extension sola
+            if(largo == 2 && tituloTitulo.equals("")){
+                var filtro_buscandoEXTENSIONRutas =
+                        ruta.get(tamano).archivo.stream()
+                                .filter(rutas -> !rutas.getExtension().equals(path))
+                                .collect(Collectors.toList());
+                rutaruta.carpeta = ruta.get(tamano).carpeta;
+                rutaruta.usuariocarpeta = getLogueados().get(0);
+                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
+                rutaruta.archivo = filtro_buscandoEXTENSIONRutas;
+                ruta.add(rutaruta);
+            }
+
+
+            //else{
+             //   System.out.println("No hay ningun archivo que cumpla esas condiciones.");
+            //}
 
 
 
