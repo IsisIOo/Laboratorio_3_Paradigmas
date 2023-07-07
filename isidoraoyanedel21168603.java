@@ -178,16 +178,25 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
             rutaruta.usuariocarpeta = getLogueados().get(0);
             rutaruta.carpeta = ruta.get(tamano).carpeta;
-            //agregar archivos, rutaruta.
+            rutaruta.archivo = ruta.get(tamano).archivo;
             ruta.add(rutaruta);
         }
 
         //caso normal
         if (currentChapters.contains(camino_seleccionado)){
-            rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + camino_seleccionado + "/";
-            rutaruta.usuariocarpeta = getLogueados().get(0);
             //AGREGAR ARCHIVOS
-            ruta.add(rutaruta);
+            var filtro_buscandoRutasNORMAL =
+                    ruta.stream()
+                            .filter(rutas -> rutas.rutaSTRING.equals(ruta.get(tamano).rutaSTRING + camino_seleccionado + "/"))
+                            .collect(Collectors.toList());
+            if (filtro_buscandoRutasNORMAL.size() >= 1) {
+                var tamano3 = filtro_buscandoRutasNORMAL.size() - 1;
+                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + camino_seleccionado + "/";
+                rutaruta.archivo.addAll((filtro_buscandoRutasNORMAL.get(tamano3).archivo));
+                rutaruta.carpeta.addAll((filtro_buscandoRutasNORMAL.get(tamano3).carpeta));
+                rutaruta.usuariocarpeta = getLogueados().get(0);
+                ruta.add(rutaruta);
+            }
         }
 
 //caso /.folder1
@@ -199,7 +208,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + total + "/";
                 rutaruta.usuariocarpeta = getLogueados().get(0);
                 //AGREGAR ARCHIVOS
-                ruta.add(rutaruta);
+                ruta.add(rutaruta); //NO C QUE PASA
             }
         }
 
@@ -501,10 +510,11 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             String[] titulo_separado = path.split("\\.");
             var largo = titulo_separado.length;
             var tituloTitulo = titulo_separado[0];
-            var extensionTitulo = titulo_separado[1];
+
 
             //caso de titulo.extension
             if(largo == 2 && !tituloTitulo.equals("")) {
+                var extensionTitulo = titulo_separado[1];
                 if (currentFiles.contains(tituloTitulo)) {
                     var filtro_buscandoTITULOSRutas =
                             ruta.get(tamano).archivo.stream()
@@ -528,6 +538,23 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 rutaruta.usuariocarpeta = getLogueados().get(0);
                 rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
                 rutaruta.archivo = filtro_buscandoEXTENSIONRutas;
+                ruta.add(rutaruta);
+            }
+
+
+            var currentChapters =
+                ruta.get(tamano).carpeta.stream()
+                        .map(Chapter::getNombre)
+                        .collect(Collectors.toList());
+            if(currentChapters.contains(path)){
+                var filtro_borrarUNAcarpeta =
+                        ruta.get(tamano).carpeta.stream()
+                                .filter((rutas -> !rutas.getNombre().equals(path)))
+                                .collect(Collectors.toList());
+                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
+                rutaruta.carpeta.addAll(ruta.get(tamano).carpeta);
+                rutaruta.carpeta = filtro_borrarUNAcarpeta;
+                rutaruta.usuariocarpeta = getLogueados().get(0);
                 ruta.add(rutaruta);
             }
 

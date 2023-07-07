@@ -122,7 +122,7 @@ public class Main {
             filesystem.crea_file();
             System.out.println(filesystem);
 
-            filesystem.del(".pdf");
+            filesystem.del("t-rex");
             System.out.println(filesystem);
 
         }
