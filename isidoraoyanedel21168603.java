@@ -581,7 +581,20 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
         }
 
-    public void
+    //public void copy (String file, String target){
+
+
+
+
+
+
+
+
+
+
+
+
+    //}
 
 
 
