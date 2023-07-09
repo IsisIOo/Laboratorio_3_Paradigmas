@@ -60,40 +60,9 @@ public class Main {
             //filesystem.login("User1"); //cambia el usuario que está dentro de la ruta
             //System.out.println(filesystem);
 
-            System.out.println(filesystem);
-
-            filesystem.switchDrive("E");
-            System.out.println(filesystem);
-
-            filesystem.mkdir("ADOPS");
-            System.out.println(filesystem);
-
-            filesystem.mkdir("EADO");
-            System.out.println(filesystem);
-
-            filesystem.switchDrive("C");
-            System.out.println(filesystem);
-
-            filesystem.switchDrive("E");
-            System.out.println(filesystem);
-
-            filesystem.mkdir("EADO");
-            System.out.println(filesystem);
-
-            filesystem.cd("EADO");
-            System.out.println(filesystem);
-
-            filesystem.mkdir("gfafa");
-            System.out.println(filesystem);
-
             filesystem.cd("/");
             System.out.println(filesystem);
 
-            filesystem.switchDrive("C");
-            System.out.println(filesystem);
-
-            filesystem.cd("hola");
-            System.out.println(filesystem);
 
             //filesystem.cd("/"); //funciona
             //System.out.println(filesystem);
@@ -101,29 +70,21 @@ public class Main {
             filesystem.mkdir("feo thomi");
             System.out.println(filesystem);
 
-            filesystem.mkdir("dinosaurio");
-            System.out.println(filesystem);
-
-            filesystem.mkdir("t-rex");
-            System.out.println(filesystem);
-
             filesystem.cd("feo thomi");
             System.out.println(filesystem);
 
-            filesystem.cd("..");
+            filesystem.crea_file();
             System.out.println(filesystem);
 
-            //filesystem.cd("./dinosaurio");
+
+            filesystem.cd("..");
             //System.out.println(filesystem);
 
-            filesystem.crea_file();
-            System.out.println(filesystem);
+           // filesystem.crea_file();
+            //System.out.println(filesystem);
 
-            filesystem.crea_file();
-            System.out.println(filesystem);
 
-            filesystem.del("t-rex");
-            System.out.println(filesystem);
+
 
         }
     }

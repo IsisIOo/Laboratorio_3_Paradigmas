@@ -197,6 +197,11 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 rutaruta.usuariocarpeta = getLogueados().get(0);
                 ruta.add(rutaruta);
             }
+            else{
+                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + camino_seleccionado + "/";
+                rutaruta.usuariocarpeta = getLogueados().get(0);
+                ruta.add(rutaruta);
+            }
         }
 
 //caso /.folder1
@@ -550,7 +555,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 ruta.add(rutaruta);
             }
 
-
+//caso carpeta simple
             var currentChapters =
                 ruta.get(tamano).carpeta.stream()
                         .map(Chapter::getNombre)
@@ -567,12 +572,12 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 ruta.add(rutaruta);
             }
 
+            //falta el caso de carpeta con archivos
+
 
             //else{
              //   System.out.println("No hay ningun archivo que cumpla esas condiciones.");
             //}
-
-
 
         }
 
@@ -593,13 +598,13 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
     @Override
     public String toString() {
         return "isidoraoyanedel21168603{" +
-                "nombre='" + nombre + '\'' +
-                ", fechaCreacrion=" + fechaCreacrion +
-                ", drives=" + drives +
-                ", usuarios=" + usuarios +
-                ", logueados=" + logueados +
-                ", actual=" + actual +
-                ", ruta=" + ruta +
+                "nombre='" + nombre + '\'' + "\n" +
+                " fechaCreacrion=" + fechaCreacrion + "\n" +
+                " drives=" + drives + "\n" +
+                " usuarios=" + usuarios + "\n" +
+                " logueados=" + logueados + "\n" +
+                " actual=" + actual + "\n" +
+                " ruta=" + ruta + "\n" +
                 '}';
     }
 
