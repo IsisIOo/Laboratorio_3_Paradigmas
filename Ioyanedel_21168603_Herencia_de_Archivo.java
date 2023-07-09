@@ -1,11 +1,11 @@
 package org.example;
 
 public class Ioyanedel_21168603_Herencia_de_Archivo {
-    String nombre;
-    String extension;
-    String contenido;
-    String atributo_Seg;
-    String atributo_lect;
+    private String nombre; //no se si ponerle private, me caga el to string
+    private String extension;
+    private String contenido;
+    private String atributo_Seg;
+    private String atributo_lect;
 
 
     @Override

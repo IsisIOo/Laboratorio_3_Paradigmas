@@ -41,5 +41,17 @@ public class Path {
     public List<File> getArchivo() {
         return archivo;
     }
+
+    public String getRutaSTRING() {
+        return rutaSTRING;
+    }
+
+    public String getUsuariocarpeta() {
+        return usuariocarpeta;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
 }
 

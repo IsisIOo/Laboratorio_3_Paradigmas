@@ -5,12 +5,12 @@ import java.util.stream.Collectors;
 
 public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
     //esta cosa es sistema
-    String nombre;
-    Date fechaCreacrion;
-    List<Drive> drives;
-    List<Usuario> usuarios;
-    List<String> logueados;
-    List<String> actual;
+    private String nombre;
+    private Date fechaCreacrion;
+    private List<Drive> drives;
+    private List<Usuario> usuarios;
+    private List<String> logueados;
+    private List<String> actual;
 
     //List<Chapter> carpeta; //lo estoy usando en path
 
@@ -580,6 +580,8 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             //}
 
         }
+
+    public void
 
 
 

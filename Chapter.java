@@ -1,7 +1,7 @@
 package org.example;
 
 public class Chapter implements Interfaz_chapter_ioyanedel_21168603{
-    String nombre;
+    private String nombre;
 
     public Chapter(String nombre) {
         this.nombre = nombre;

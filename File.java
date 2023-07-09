@@ -6,11 +6,11 @@ public class File extends Ioyanedel_21168603_Herencia_de_Archivo{
     @Override
     public String toString() {
         return "File{" +
-                "nombre='" + nombre + '\'' +
-                ", extension='" + extension + '\'' +
-                ", contenido='" + contenido + '\'' +
-                ", atributo_Seg='" + atributo_Seg + '\'' +
-                ", atributo_lect='" + atributo_lect + '\'' +
+                "nombre='" + getNombre() + '\'' +
+                ", extension='" + getExtension() + '\'' +
+                ", contenido='" + getContenido() + '\'' +
+                ", atributo_Seg='" + getAtributo_Seg() + '\'' +
+                ", atributo_lect='" + getAtributo_lect() + '\'' +
                 '}';
     }
 

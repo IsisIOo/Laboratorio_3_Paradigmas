@@ -1,10 +1,10 @@
 package org.example;
 
 public class Drive {
-    String letter;
-    String nombre;
+    private String letter;
+    private String nombre;
 
-    int capacity;
+    private int capacity;
 
     public Drive(String letter, String nombre, int capacity) {
         this.letter = letter;
