@@ -77,11 +77,13 @@ public class Main {
             System.out.println(filesystem);
 
 
-            filesystem.cd("..");
+            //filesystem.cd("..");
             //System.out.println(filesystem);
 
            // filesystem.crea_file();
             //System.out.println(filesystem);
+
+            filesystem.copy("hola.txt", "D:/");
 
 
 

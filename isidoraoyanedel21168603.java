@@ -581,7 +581,50 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
         }
 
-    //public void copy (String file, String target){
+    public void copy (String file, String target){
+        var rutaruta = new Path();
+        //caso de mover a otro drive
+        String[] existedrive = target.split("/");
+        var drivev= existedrive[0];
+
+        var currentDrivesletter = //obtiene las letras de todos los drives
+                drives.stream()
+                        .map(Drive::getLetter)
+                        .collect(Collectors.toList());
+
+        var driveamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
+                ruta.stream()
+                        .filter(rutas->rutas.rutaSTRING.equals(drivev.toLowerCase() + "/"))
+                        .collect(Collectors.toList());
+
+        var tamano2 = driveamover.size()-1;
+        var tamano = ruta.size()-1;
+
+        String[] tituloyextension = file.split("\\.");
+        var titulo = tituloyextension[0];
+        var extension = tituloyextension[1];
+
+        var obtenerarchivocosas =
+                ruta.get(tamano).archivo.stream()
+                        .filter(File -> File.getNombre().equals(titulo)&& File.getExtension().equals("." + extension))
+                        .collect(Collectors.toList());
+        
+//caso nunca abri esa ruta, por lo tanto debo saber si existe el drive letra y si existe la carpeta
+        if(currentDrivesletter.contains(drivev)){
+
+            var carpetadestino = existedrive[1];
+
+            //ruta1.carpeta.addAll(rutasderutas.get(tamano2).carpeta);
+            if(driveamover.get(tamano2).getCarpeta().contains(carpetadestino)){
+
+                rutaruta.rutaSTRING = target.toLowerCase();
+                rutaruta.archivo.addAll(obtenerarchivocosas);
+                rutaruta.archivo.addAll(driveamover.get(tamano2).getArchivo());
+                rutaruta.usuariocarpeta= getLogueados().get(0);
+                rutaruta.carpeta = driveamover.get(tamano2).carpeta;
+            }
+
+        }
 
 
 
@@ -594,7 +637,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
 
 
-    //}
+    }
 
 
 
