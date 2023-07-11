@@ -479,6 +479,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
     }
 
     public void del(String path){
+
         //caso archivo
         //if(path.contains('.')) {
             var rutaruta = new Path();
@@ -582,6 +583,10 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         }
 
     public void copy (String file, String target){
+        //si es un archivo file podrá separarse por punto puesto que lo recibe como entrada como foo.txt, en cambio si recibe carpeta, solo será el nombre
+        String[] file1 = file.split("\\.");
+
+        if(file1.length > 0){
         var rutaruta = new Path();
         //caso de mover a otro drive
         String[] existedrive1 = target.split(":/");
@@ -603,8 +608,8 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         var tamano = ruta.size()-1;
 
         String[] tituloyextension = file.split("\\.");
-        var titulo = tituloyextension[0];
-        var extension = tituloyextension[1];
+        var titulo = tituloyextension[0];//titulo del archivo
+        var extension = tituloyextension[1]; //extension del archivo
 
         var obtenerarchivocosas =
                 ruta.get(tamano).archivo.stream()
@@ -661,6 +666,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 ruta.add(rutaruta);
             }
 
+
             else{
                 rutaruta.rutaSTRING = target.toLowerCase();
                 rutaruta.archivo.addAll(obtenerarchivocosas);
@@ -680,9 +686,18 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             rutaruta.carpeta = driveamover.get(tamano2).carpeta;
             ruta.add(rutaruta);
         }
+        }
+
+    else { //el largo del archivo a mover separado por / es ==0 (esto ocurre porque cuando muevo carpeta no tengo  .
+        //agregar como recueprar los archivos  de la carpeta y agregarlos a los archivos existentes a de la carpeta de destino
+            // a las carpetas de la ruta de destino hay que agregarle la carpeta que queremos mover
 
 
 
+
+
+
+    }
 
 
 
