@@ -51,6 +51,7 @@ public class Main {
             filesystem.switchDrive("C");
             System.out.println(filesystem);
 
+
             filesystem.mkdir("hola");
             System.out.println(filesystem);
 
@@ -76,7 +77,20 @@ public class Main {
             filesystem.crea_file();
             System.out.println(filesystem);
 
+            filesystem.switchDrive("D");
+            System.out.println(filesystem);
 
+            filesystem.mkdir("culo");
+            System.out.println(filesystem);
+
+            filesystem.mkdir("figura");
+            System.out.println(filesystem);
+
+            filesystem.switchDrive("C");
+            System.out.println(filesystem);
+
+            filesystem.cd("feo thomi");
+            System.out.println(filesystem);
             //filesystem.cd("..");
             //System.out.println(filesystem);
 
@@ -84,6 +98,8 @@ public class Main {
             //System.out.println(filesystem);
 
             filesystem.copy("hola.txt", "D:/");
+            System.out.println(filesystem);
+
 
 
 
