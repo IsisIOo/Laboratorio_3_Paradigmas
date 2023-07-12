@@ -91,13 +91,16 @@ public class Main {
 
             filesystem.cd("feo thomi");
             System.out.println(filesystem);
+
+            filesystem.mkdir("chalala");
+            System.out.println(filesystem);
             //filesystem.cd("..");
             //System.out.println(filesystem);
 
            // filesystem.crea_file();
             //System.out.println(filesystem);
 
-            filesystem.copy("hola.txt", "D:/");
+            filesystem.copy("feo thomi", "D:/culo/");
             System.out.println(filesystem);
 
 
