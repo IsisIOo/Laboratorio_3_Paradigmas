@@ -594,6 +594,10 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         String[] existedrive = target.split("/");
         var drivev= existedrive1[0];
 
+        //conseguimos la penultima posición del registro de ruta
+        int penultima_posicion = ruta.size() - 2;
+
+
 
         var currentDrivesletter = //obtiene las letras de todos los drives
                 drives.stream()
@@ -612,23 +616,26 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         var titulo = tituloyextension[0];//titulo del archivo
         var extension = tituloyextension[1]; //extension del archivo
 
+            //Consigue los datos del archivo
         var obtenerarchivocosas =
                 ruta.get(tamano).archivo.stream()
                         .filter(File -> File.getNombre().equals(titulo) && File.getExtension().equals("." + extension))
                         .collect(Collectors.toList());
 
+        //recupera los datos de la ruta de destino
         var recuperardatosderuta =
                 ruta.stream()
                         .filter(rutas->rutas.rutaSTRING.equals(target.toLowerCase()))
                         .collect(Collectors.toList());
 
+        //obtiene las carpetas del destino
         var currentChapters =
                 driveamover.get(tamano2).carpeta.stream()
                         .map(Chapter::getNombre)
                         .collect(Collectors.toList());
         
-//caso nunca abri esa ruta, por lo tanto debo saber si existe el drive letra y si existe la carpeta
-        //cuando hay drive y una carpeta
+        //caso nunca abri esa ruta, por lo tanto debo saber si existe el drive letra y si existe la carpeta
+        //cuando hay drive y una carpeta, ejemplo: "c:/folder1/"
         if(currentDrivesletter.contains(drivev) && existedrive.length>1){
 
             var carpetadestino = existedrive[1];
@@ -643,7 +650,8 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                     //rutaruta.archivo.addAll(recuperardatosderuta.get(tamano2).getArchivo());
                     rutaruta.usuariocarpeta = getLogueados().get(0);
                     //rutaruta.carpeta = new ArrayList<>();
-                    ruta.add(rutaruta);
+                    ruta.add(penultima_posicion, rutaruta);
+
                 }
                 else { //caso cuando existe una ruta en la que se trabajo el d:/carpeta
                     rutaruta.rutaSTRING = target.toLowerCase();
@@ -769,11 +777,13 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
                 }
                 else if (obteneractualizacioncarpetaRECIBIR.isEmpty() && !obteneractualizacioncarpetamover.isEmpty()) {
+                    int penultima_posicion = ruta.size() - 1;
+
                     rutaruta.rutaSTRING = target.toLowerCase() + file + "/";
                     rutaruta.carpeta.addAll(obtenerarchivocosas);
                     rutaruta.archivo.addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
                     rutaruta.usuariocarpeta = getLogueados().get(0);
-                    ruta.add(rutaruta);
+                    ruta.add(penultima_posicion, rutaruta);
 
                 }
                 else {

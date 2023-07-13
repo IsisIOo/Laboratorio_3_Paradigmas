@@ -100,7 +100,7 @@ public class Main {
            // filesystem.crea_file();
             //System.out.println(filesystem);
 
-            filesystem.copy("feo thomi", "D:/culo/");
+            filesystem.copy("feo thomi", "D:/culo/"); 
             System.out.println(filesystem);
 
 
