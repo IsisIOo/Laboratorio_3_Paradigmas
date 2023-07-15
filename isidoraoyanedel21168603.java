@@ -113,32 +113,32 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         if(tamano > 1){
 
             var currentChapters =
-                    ruta.get(tamano).carpeta.stream()
+                    ruta.get(tamano).getCarpeta().stream()
                             .map(Chapter::getNombre)
                             .collect(Collectors.toList());
-            ruta1.usuariocarpeta = (getLogueados().get(0)); //obtiene solo el string
+            ruta1.setUsuariocarpeta((getLogueados().get(0))); //obtiene solo el string
             var drive_minuscula = actual.get(0).toLowerCase();
-            ruta1.rutaSTRING = drive_minuscula + ":/"; //con get0 agarra solo la letra
+            ruta1.setRutaSTRING(drive_minuscula + ":/");//con get0 agarra solo la letra
             var rutasderutas =
                     ruta.stream()
-                            .filter(rutas->rutas.rutaSTRING.equals(actual.get(0).toLowerCase() + ":/"))
+                            .filter(rutas->rutas.getRutaSTRING().equals(actual.get(0).toLowerCase() + ":/"))
                             .collect(Collectors.toList());
 
             if(rutasderutas.size()>1){
                 var tamano2 = rutasderutas.size()-1;
-                ruta1.carpeta.addAll(rutasderutas.get(tamano2).carpeta);
+                ruta1.getCarpeta().addAll(rutasderutas.get(tamano2).getCarpeta());
             }
 
             //ruta1.carpeta= ;
             ruta.add(ruta1);
         }
         else{
-           ruta1.rutaSTRING = actual.get(0).toLowerCase() + ":/";
-           ruta1.usuariocarpeta = getLogueados().get(0);
-           //var carpetas = new ArrayList<>();
-           //var archivos = new ArrayList<>();
-           //ruta1.carpeta = carpetas;
-           ruta.add(ruta1);
+            ruta1.setRutaSTRING(actual.get(0).toLowerCase() + ":/");
+            ruta1.setUsuariocarpeta(getLogueados().get(0));
+            //var carpetas = new ArrayList<>();
+            //var archivos = new ArrayList<>();
+            //ruta1.carpeta = carpetas;
+            ruta.add(ruta1);
         }
 
 
@@ -153,15 +153,15 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         var tamano = ruta.size()-1;
         var carpeta1 = new Chapter(chaptername);
         var currentChapters =
-                ruta.get(tamano).carpeta.stream()
+                ruta.get(tamano).getCarpeta().stream()
                         .map(Chapter::getNombre)
                         .collect(Collectors.toList());
         if (!currentChapters.contains(chaptername)) {
-            rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
-            rutaruta.carpeta.addAll(ruta.get(tamano).getCarpeta());
-            rutaruta.carpeta.add(carpeta1);//agrega la carpeta a las carpetas, quiero que se agregue a las que habian antes
-            rutaruta.archivo.addAll(ruta.get(tamano).getArchivo());
-            rutaruta.usuariocarpeta = getLogueados().get(0);
+            rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
+            rutaruta.getCarpeta().addAll(ruta.get(tamano).getCarpeta());
+            rutaruta.getCarpeta().add(carpeta1);//agrega la carpeta a las carpetas, quiero que se agregue a las que habian antes
+            rutaruta.getArchivo().addAll(ruta.get(tamano).getArchivo());
+            rutaruta.setUsuariocarpeta(getLogueados().get(0));
             ruta.add(rutaruta);
         }
     }
@@ -176,10 +176,10 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
         //otros if de los comodines LSITOS
         if (camino_seleccionado == "././././" || camino_seleccionado == "." || camino_seleccionado == "./"){
-            rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
-            rutaruta.usuariocarpeta = getLogueados().get(0);
-            rutaruta.carpeta = ruta.get(tamano).carpeta;
-            rutaruta.archivo = ruta.get(tamano).archivo;
+            rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
+            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+            rutaruta.setCarpeta(ruta.get(tamano).getCarpeta());
+            rutaruta.setArchivo(ruta.get(tamano).getArchivo());
             ruta.add(rutaruta);
         }
 
@@ -188,19 +188,19 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             //AGREGAR ARCHIVOS
             var filtro_buscandoRutasNORMAL =
                     ruta.stream()
-                            .filter(rutas -> rutas.rutaSTRING.equals(ruta.get(tamano).rutaSTRING + camino_seleccionado + "/"))
+                            .filter(rutas -> rutas.getRutaSTRING().equals(ruta.get(tamano).getRutaSTRING() + camino_seleccionado + "/"))
                             .collect(Collectors.toList());
             if (filtro_buscandoRutasNORMAL.size() >= 1) {
                 var tamano3 = filtro_buscandoRutasNORMAL.size() - 1;
-                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + camino_seleccionado + "/";
-                rutaruta.archivo.addAll((filtro_buscandoRutasNORMAL.get(tamano3).archivo));
-                rutaruta.carpeta.addAll((filtro_buscandoRutasNORMAL.get(tamano3).carpeta));
-                rutaruta.usuariocarpeta = getLogueados().get(0);
+                rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING() + camino_seleccionado + "/");
+                rutaruta.getArchivo().addAll((filtro_buscandoRutasNORMAL.get(tamano3).getArchivo()));
+                rutaruta.getCarpeta().addAll((filtro_buscandoRutasNORMAL.get(tamano3).getCarpeta()));
+                rutaruta.setUsuariocarpeta(getLogueados().get(0));
                 ruta.add(rutaruta);
             }
             else{
-                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + camino_seleccionado + "/";
-                rutaruta.usuariocarpeta = getLogueados().get(0);
+                rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING() + camino_seleccionado + "/");
+                rutaruta.setUsuariocarpeta(getLogueados().get(0));
                 ruta.add(rutaruta);
             }
         }
@@ -214,14 +214,14 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             if (currentChapters.contains(total)) { //busca el titulo string
                 var filtro_buscandoRutasBARRA =
                         ruta.stream()
-                                .filter(rutas -> rutas.rutaSTRING.equals(ruta.get(tamano).rutaSTRING + total + "/"))
+                                .filter(rutas -> rutas.getRutaSTRING().equals(ruta.get(tamano).getRutaSTRING() + total + "/"))
                                 .collect(Collectors.toList());
                 if (filtro_buscandoRutasBARRA.size() >= 1) {
                     var tamano3 = filtro_buscandoRutasBARRA.size() - 1;
-                    rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING + total + "/";
-                    rutaruta.archivo.addAll((filtro_buscandoRutasBARRA.get(tamano3).archivo));
-                    rutaruta.carpeta.addAll((filtro_buscandoRutasBARRA.get(tamano3).carpeta));
-                    rutaruta.usuariocarpeta = getLogueados().get(0);
+                    rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING() + total + "/");
+                    rutaruta.getArchivo().addAll((filtro_buscandoRutasBARRA.get(tamano3).getArchivo()));
+                    rutaruta.getCarpeta().addAll((filtro_buscandoRutasBARRA.get(tamano3).getCarpeta()));
+                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
                     ruta.add(rutaruta);
                 }
             }
@@ -229,19 +229,19 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
         //caso de cuando quiere devolverse a la raiz recupera las cosas de la raiz
         if(camino_seleccionado == "/") { //regresa a la raiz de la unidad
-            String[] raiz_unidad = ruta.get(tamano).rutaSTRING.split("/");
+            String[] raiz_unidad = ruta.get(tamano).getRutaSTRING().split("/");
             var raiz_unidad1 = raiz_unidad[0];
             //hacer if que si raiz_ unidad0 = actual con / obtenga las carpetas o algo asi
             var filtro_raicesUnidad =
                     ruta.stream()
-                            .filter(rutas -> rutas.rutaSTRING.equals(actual.get(0).toLowerCase() + ":/")) //rutas=creado aqui
+                            .filter(rutas -> rutas.getRutaSTRING().equals(actual.get(0).toLowerCase() + ":/")) //rutas=creado aqui
                             .collect(Collectors.toList());
 
             if (filtro_raicesUnidad.size() > 1) { //recupera y asigna luego del filtro
                 var tamano2 = filtro_raicesUnidad.size() - 1;
-                rutaruta.carpeta.addAll(filtro_raicesUnidad.get(tamano2).carpeta);
-                rutaruta.rutaSTRING = raiz_unidad1 + "/";
-                rutaruta.usuariocarpeta = getLogueados().get(0);
+                rutaruta.getCarpeta().addAll(filtro_raicesUnidad.get(tamano2).getCarpeta());
+                rutaruta.setRutaSTRING(raiz_unidad1 + "/");
+                rutaruta.setUsuariocarpeta(getLogueados().get(0));
                 ruta.add(rutaruta);
             }
         }
@@ -249,7 +249,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             //caso de regresar a la anterior
 
         if(camino_seleccionado == "..") {
-            var borrar_ultimo = ruta.get(tamano).rutaSTRING.split("/"); //hace lista de string[]
+            var borrar_ultimo = ruta.get(tamano).getRutaSTRING().split("/"); //hace lista de string[]
             var largototal = borrar_ultimo.length - 1;
             String[] copiaderutasinultimoelem = Arrays.copyOf(borrar_ultimo, largototal);
             String nuevaruta = String.join("/", copiaderutasinultimoelem);
@@ -257,14 +257,14 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
             var filtro_buscandoRutas =
                     ruta.stream()
-                            .filter(rutas -> rutas.rutaSTRING.equals(nuevarutaReArmada))
+                            .filter(rutas -> rutas.getRutaSTRING().equals(nuevarutaReArmada))
                             .collect(Collectors.toList());
             if (filtro_buscandoRutas.size() >= 1) {
                 var tamano3 = filtro_buscandoRutas.size() - 1;
-                rutaruta.rutaSTRING = nuevarutaReArmada;
-                rutaruta.archivo.addAll((filtro_buscandoRutas.get(tamano3).archivo));
-                rutaruta.carpeta.addAll((filtro_buscandoRutas.get(tamano3).carpeta));
-                rutaruta.usuariocarpeta = getLogueados().get(0);
+                rutaruta.setRutaSTRING(nuevarutaReArmada);
+                rutaruta.getArchivo().addAll((filtro_buscandoRutas.get(tamano3).getArchivo()));
+                rutaruta.getCarpeta().addAll((filtro_buscandoRutas.get(tamano3).getCarpeta()));
+                rutaruta.setUsuariocarpeta(getLogueados().get(0));
                 ruta.add(rutaruta);
 
             }
@@ -459,16 +459,16 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         var rutaruta = new Path();
         var tamano = ruta.size()-1;
         var currentFiles =
-                ruta.get(tamano).archivo.stream()
+                ruta.get(tamano).getArchivo().stream()
                         .map(File::getNombre)
                         .collect(Collectors.toList());
         if (!currentFiles.contains(archivo.getNombre())){
             var archivos_actuales = getRuta().get(tamano).getArchivo();
-            rutaruta.archivo.add(archivo);
-            rutaruta.archivo.addAll(archivos_actuales);
-            rutaruta.carpeta = ruta.get(tamano).carpeta;
-            rutaruta.usuariocarpeta= getLogueados().get(0);
-            rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
+            rutaruta.getArchivo().add(archivo);
+            rutaruta.getArchivo().addAll(archivos_actuales);
+            rutaruta.setCarpeta(ruta.get(tamano).getCarpeta());
+            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+            rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
             //AGREGAR ARCHIVOS
             ruta.add(rutaruta);
         }
@@ -486,19 +486,20 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             var rutaruta = new Path();
             var tamano = ruta.size() - 1;
             var currentFiles =
-                    ruta.get(tamano).archivo.stream()
+                    ruta.get(tamano).getArchivo().stream()
                             .map(File::getNombre)
                             .collect(Collectors.toList());
 
             if (currentFiles.contains(path)) {
                 var filtro_buscandoTITULOSRutas =
-                        ruta.get(tamano).archivo.stream()
+                        ruta.get(tamano).getArchivo().stream()
                                 .filter(rutas -> !rutas.getNombre().equals(path))
                                 .collect(Collectors.toList());
-                rutaruta.carpeta = ruta.get(tamano).carpeta;
-                rutaruta.usuariocarpeta = getLogueados().get(0);
-                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
-                rutaruta.archivo = filtro_buscandoTITULOSRutas;
+
+                rutaruta.setCarpeta(ruta.get(tamano).getCarpeta());
+                rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
+                rutaruta.setArchivo(filtro_buscandoTITULOSRutas);
                 ruta.add(rutaruta);
             }
 
@@ -516,10 +517,10 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
             }*/
             if(path == "." || path == "*"){
-                rutaruta.carpeta = ruta.get(tamano).carpeta;
-                rutaruta.usuariocarpeta = getLogueados().get(0);
-                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
-                rutaruta.archivo.clear();
+                rutaruta.setCarpeta(ruta.get(tamano).getCarpeta());
+                rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
+                rutaruta.getArchivo().clear();
                 ruta.add(rutaruta);
             }
 
@@ -533,13 +534,13 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 var extensionTitulo = titulo_separado[1];
                 if (currentFiles.contains(tituloTitulo)) {
                     var filtro_buscandoTITULOSRutas =
-                            ruta.get(tamano).archivo.stream()
+                            ruta.get(tamano).getArchivo().stream()
                                     .filter(rutas -> !rutas.getNombre().equals(tituloTitulo) && !rutas.getExtension().equals(extensionTitulo))
                                     .collect(Collectors.toList());
-                    rutaruta.carpeta = ruta.get(tamano).carpeta;
-                    rutaruta.usuariocarpeta = getLogueados().get(0);
-                    rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
-                    rutaruta.archivo = filtro_buscandoTITULOSRutas;
+                    rutaruta.setCarpeta(ruta.get(tamano).getCarpeta());
+                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                    rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
+                    rutaruta.setArchivo(filtro_buscandoTITULOSRutas);
                     ruta.add(rutaruta);
                 }
             }
@@ -547,30 +548,32 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             //caso extension sola
             if(largo == 2 && tituloTitulo.equals("")){
                 var filtro_buscandoEXTENSIONRutas =
-                        ruta.get(tamano).archivo.stream()
+                        ruta.get(tamano).getArchivo().stream()
                                 .filter(rutas -> !rutas.getExtension().equals(path))
                                 .collect(Collectors.toList());
-                rutaruta.carpeta = ruta.get(tamano).carpeta;
-                rutaruta.usuariocarpeta = getLogueados().get(0);
-                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
-                rutaruta.archivo = filtro_buscandoEXTENSIONRutas;
+                rutaruta.setCarpeta(ruta.get(tamano).getCarpeta());
+                rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
+                rutaruta.setArchivo(filtro_buscandoEXTENSIONRutas);
                 ruta.add(rutaruta);
             }
 
 //caso carpeta simple
             var currentChapters =
-                ruta.get(tamano).carpeta.stream()
+                ruta.get(tamano).getCarpeta().stream()
                         .map(Chapter::getNombre)
                         .collect(Collectors.toList());
+
             if(currentChapters.contains(path)){
                 var filtro_borrarUNAcarpeta =
-                        ruta.get(tamano).carpeta.stream()
+                        ruta.get(tamano).getCarpeta().stream()
                                 .filter((rutas -> !rutas.getNombre().equals(path)))
                                 .collect(Collectors.toList());
-                rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
-                rutaruta.carpeta.addAll(ruta.get(tamano).carpeta);
-                rutaruta.carpeta = filtro_borrarUNAcarpeta;
-                rutaruta.usuariocarpeta = getLogueados().get(0);
+
+                rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING()); //rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
+                rutaruta.getCarpeta().addAll(ruta.get(tamano).getCarpeta());
+                rutaruta.setCarpeta(filtro_borrarUNAcarpeta);
+                rutaruta.setUsuariocarpeta(getLogueados().get(0));
                 ruta.add(rutaruta);
             }
 
@@ -587,7 +590,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         //si es un archivo file podrá separarse por punto puesto que lo recibe como entrada como foo.txt, en cambio si recibe carpeta, solo será el nombre
         String[] file1 = file.split("\\.");
 
-        if(file.contains("\\.")){
+        if(file.contains(".")){
         var rutaruta = new Path();
         //caso de mover a otro drive
         String[] existedrive1 = target.split(":/");
@@ -606,7 +609,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
         var driveamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
                 ruta.stream()
-                        .filter(rutas->rutas.rutaSTRING.equals(drivev.toLowerCase() + ":" + "/"))
+                        .filter(rutas->rutas.getRutaSTRING().equals(drivev.toLowerCase() + ":" + "/"))
                         .collect(Collectors.toList());
 
         var tamano2 = driveamover.size()-1;
@@ -618,19 +621,19 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
             //Consigue los datos del archivo
         var obtenerarchivocosas =
-                ruta.get(tamano).archivo.stream()
+                ruta.get(tamano).getArchivo().stream()
                         .filter(File -> File.getNombre().equals(titulo) && File.getExtension().equals("." + extension))
                         .collect(Collectors.toList());
 
         //recupera los datos de la ruta de destino
         var recuperardatosderuta =
                 ruta.stream()
-                        .filter(rutas->rutas.rutaSTRING.equals(target.toLowerCase()))
+                        .filter(rutas->rutas.getRutaSTRING().equals(target.toLowerCase()))
                         .collect(Collectors.toList());
 
         //obtiene las carpetas del destino
         var currentChapters =
-                driveamover.get(tamano2).carpeta.stream()
+                driveamover.get(tamano2).getCarpeta().stream()
                         .map(Chapter::getNombre)
                         .collect(Collectors.toList());
         
@@ -645,20 +648,20 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             if(currentChapters.contains(carpetadestino)) {
                 //caso donde nunca se trabajo con d:/carpeta por lo tanto todos sus listas son vacias
                 if (recuperardatosderuta.isEmpty()) {
-                    rutaruta.rutaSTRING = target.toLowerCase();
-                    rutaruta.archivo.addAll(obtenerarchivocosas);
+                    rutaruta.setRutaSTRING(target.toLowerCase());
+                    rutaruta.getArchivo().addAll(obtenerarchivocosas);
                     //rutaruta.archivo.addAll(recuperardatosderuta.get(tamano2).getArchivo());
-                    rutaruta.usuariocarpeta = getLogueados().get(0);
+                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
                     //rutaruta.carpeta = new ArrayList<>();
-                    ruta.add(penultima_posicion, rutaruta);
+                    ruta.add(rutaruta);
 
                 }
                 else { //caso cuando existe una ruta en la que se trabajo el d:/carpeta
-                    rutaruta.rutaSTRING = target.toLowerCase();
-                    rutaruta.archivo.addAll(obtenerarchivocosas);
-                    rutaruta.archivo.addAll(recuperardatosderuta.get(tamano2).getArchivo());
-                    rutaruta.usuariocarpeta = getLogueados().get(0);
-                    rutaruta.carpeta = recuperardatosderuta.get(tamano2).getCarpeta();
+                    rutaruta.setRutaSTRING(target.toLowerCase());
+                    rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                    rutaruta.getArchivo().addAll(recuperardatosderuta.get(tamano2).getArchivo());
+                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                    rutaruta.setCarpeta(recuperardatosderuta.get(tamano2).getCarpeta());
                     ruta.add(rutaruta);
                 }
 
@@ -667,32 +670,32 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
  //caso donde quiero mover a d:/ sin carpeta
             else if(currentDrivesletter.contains(drivev) && existedrive.length==1){
-                rutaruta.rutaSTRING = target.toLowerCase();
-                rutaruta.archivo.addAll(obtenerarchivocosas);
-                rutaruta.archivo.addAll(driveamover.get(tamano2).getArchivo());
-                rutaruta.usuariocarpeta= getLogueados().get(0);
-                rutaruta.carpeta = driveamover.get(tamano2).carpeta;
+                rutaruta.setRutaSTRING(target.toLowerCase());
+                rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
                 ruta.add(rutaruta);
             }
 
 
             else{
-                rutaruta.rutaSTRING = target.toLowerCase();
-                rutaruta.archivo.addAll(obtenerarchivocosas);
-                rutaruta.archivo.addAll(driveamover.get(tamano2).getArchivo());
-                rutaruta.usuariocarpeta= getLogueados().get(0);
-                rutaruta.carpeta = driveamover.get(tamano2).getCarpeta();
+                rutaruta.setRutaSTRING(target.toLowerCase());
+                rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
                 ruta.add(rutaruta);
             }
 
         }
 
         else {
-            rutaruta.rutaSTRING = target.toLowerCase();
-            rutaruta.archivo.addAll(obtenerarchivocosas);
-            rutaruta.archivo.addAll(driveamover.get(tamano2).getArchivo());
-            rutaruta.usuariocarpeta= getLogueados().get(0);
-            rutaruta.carpeta = driveamover.get(tamano2).carpeta;
+            rutaruta.setRutaSTRING(target.toLowerCase());
+            rutaruta.getArchivo().addAll(obtenerarchivocosas);
+            rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+            rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
             ruta.add(rutaruta);
         }
         }
@@ -711,37 +714,37 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                             .collect(Collectors.toList());
             var driveamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
                     ruta.stream()
-                            .filter(rutas -> rutas.rutaSTRING.equals(drivev.toLowerCase() + ":" + "/"))
+                            .filter(rutas -> rutas.getRutaSTRING().equals(drivev.toLowerCase() + ":" + "/"))
                             .collect(Collectors.toList());
 
             var tamano2 = driveamover.size() - 1;
             var tamano = ruta.size() - 1;
 
             var currentChaptersLUGARDESTINO =
-                    driveamover.get(tamano2).carpeta.stream()
+                    driveamover.get(tamano2).getCarpeta().stream()
                             .map(Chapter::getNombre)
                             .collect(Collectors.toList());
 
             var currentChaptersLUGARORIGEN =
-                    ruta.get(tamano).carpeta.stream()
+                    ruta.get(tamano).getCarpeta().stream()
                             .map(Chapter::getNombre)
                             .collect(Collectors.toList());
 
             var obteneractualizacioncarpetamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
                     ruta.stream()
-                            .filter(rutas -> rutas.rutaSTRING.contains(file))
+                            .filter(rutas -> rutas.getRutaSTRING().contains(file))
                             .collect(Collectors.toList());
 
             var tamano22 = obteneractualizacioncarpetamover.size() - 1;
 
             var obteneractualizacioncarpetaRECIBIR = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
                     ruta.stream()
-                            .filter(rutas -> rutas.rutaSTRING.equals(target))
+                            .filter(rutas -> rutas.getRutaSTRING().equals(target))
                             .collect(Collectors.toList());
             var tamano3 = obteneractualizacioncarpetaRECIBIR.size() - 1;
 
             var obtenerarchivocosas = //obtiene la carpeta que tenga el mismo nombre que file para agregarla a su destino
-                    ruta.get(tamano).carpeta.stream() //no funciona porque en get tamano no existe esa carpeta
+                    ruta.get(tamano).getCarpeta().stream() //no funciona porque en get tamano no existe esa carpeta
                             .filter(Chapter -> Chapter.getNombre().equals(file))
                             .collect(Collectors.toList());
 
@@ -755,60 +758,99 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
                 if (currentChaptersLUGARDESTINO.contains(carpetadestino) && (ruta.get(tamano).getCarpeta().contains(file) || ruta.get(tamano).getRutaSTRING().contains(file)) && !obteneractualizacioncarpetaRECIBIR.isEmpty()) {
                     var obtenerdatoscarpeta = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
                             ruta.stream()
-                                    .filter(rutas -> rutas.rutaSTRING.equals(actual + ":/" + file.toLowerCase() + "/"))
+                                    .filter(rutas -> rutas.getRutaSTRING().equals(actual + ":/" + file.toLowerCase() + "/"))
                                     .collect(Collectors.toList());
 
-                    rutaruta.rutaSTRING = target.toLowerCase() + file + "/";
-                    rutaruta.carpeta.addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta());
-                    rutaruta.carpeta.addAll(obtenerarchivocosas);
-                    rutaruta.archivo.addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
-                    rutaruta.archivo.addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
-                    rutaruta.usuariocarpeta = getLogueados().get(0);
+                    rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                    rutaruta.getCarpeta().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta());
+                    rutaruta.getCarpeta().addAll(obtenerarchivocosas);
+                    rutaruta.getArchivo().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
+                    rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
+                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
                     ruta.add(rutaruta);
 
 
                 }
                 else if (obteneractualizacioncarpetaRECIBIR.isEmpty() && obteneractualizacioncarpetamover.isEmpty()) {
-                    rutaruta.rutaSTRING = target.toLowerCase() + file + "/";
-                    rutaruta.carpeta.addAll(obtenerarchivocosas);
-                    rutaruta.usuariocarpeta = getLogueados().get(0);
+                    rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                    rutaruta.getCarpeta().addAll(obtenerarchivocosas);
+                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
                     ruta.add(rutaruta);
 
 
                 }
-                else if (obteneractualizacioncarpetaRECIBIR.isEmpty() && !obteneractualizacioncarpetamover.isEmpty()) {
-                    int penultima_posicion = ruta.size() - 1;
+                else if (obteneractualizacioncarpetaRECIBIR.isEmpty() && !obteneractualizacioncarpetamover.isEmpty()) { //funciona
+                    var recuperardatosderuta =
+                            ruta.stream()
+                                    .filter(rutas->rutas.getRutaSTRING().equals(target.toLowerCase()))
+                                    .collect(Collectors.toList());
 
-                    rutaruta.rutaSTRING = target.toLowerCase() + file + "/";
+                    var tamano5 = recuperardatosderuta.size()-1;
+
+                    var penultima_posicion = ruta.size() - 1;
+
+                   /* rutaruta.rutaSTRING = recuperardatosderuta.get(tamano5).rutaSTRING;
                     rutaruta.carpeta.addAll(obtenerarchivocosas);
-                    rutaruta.archivo.addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
-                    rutaruta.usuariocarpeta = getLogueados().get(0);
-                    ruta.add(penultima_posicion, rutaruta);
+                    rutaruta.carpeta.addAll(recuperardatosderuta.get(tamano5).getCarpeta());
+                    rutaruta.archivo.addAll(recuperardatosderuta.get(tamano5).getArchivo());
+                    rutaruta.usuariocarpeta = (recuperardatosderuta.get(tamano5).getUsuariocarpeta());
+                    ruta.add(rutaruta);*/
+
+
+                    rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                    rutaruta.getCarpeta().addAll(obteneractualizacioncarpetamover.get(tamano22).getCarpeta());
+                    rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
+                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                    ruta.add(rutaruta);
 
                 }
                 else {
-                    if ((ruta.get(tamano).getCarpeta().contains(file) && !obteneractualizacioncarpetamover.isEmpty()) || (ruta.get(tamano).getRutaSTRING().contains(file) && !obteneractualizacioncarpetamover.isEmpty()) && !obteneractualizacioncarpetaRECIBIR.isEmpty()) {
+                    if (ruta.get(tamano).getCarpeta().contains(file) && !obteneractualizacioncarpetamover.isEmpty()){
                         var obtenerdatoscarpeta = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
                                 ruta.stream()
-                                        .filter(rutas -> rutas.rutaSTRING.equals(actual + ":/" + file.toLowerCase() + "/"))
+                                        .filter(rutas -> rutas.getRutaSTRING().equals(actual + ":/" + file.toLowerCase() + "/"))
                                         .collect(Collectors.toList());
 
-                        rutaruta.rutaSTRING = target.toLowerCase() + file + "/";
-                        rutaruta.carpeta.addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta()); //no funciona porque está vacia
-                        rutaruta.carpeta.addAll(obtenerarchivocosas);
-                        rutaruta.archivo.addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
-                        rutaruta.archivo.addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
-                        rutaruta.usuariocarpeta = getLogueados().get(0);
+                        rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                        rutaruta.getCarpeta().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta()); //no funciona porque está vacia
+                        rutaruta.getCarpeta().addAll(obtenerarchivocosas);
+                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
+                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        ruta.add(rutaruta);
+
+                    }
+
+                    if((ruta.get(tamano).getRutaSTRING().contains(file) && !obteneractualizacioncarpetamover.isEmpty()) && !obteneractualizacioncarpetaRECIBIR.isEmpty()) {
+                        var borrar_ultimo = ruta.get(tamano).getRutaSTRING().split("/"); //hace lista de string[]
+                        var largototal = borrar_ultimo.length - 1;
+                        String[] copiaderutasinultimoelem = Arrays.copyOf(borrar_ultimo, largototal);
+                        String nuevaruta = String.join("/", copiaderutasinultimoelem);
+                        String nuevarutaReArmada = nuevaruta + "/";
+
+                        var filtro_buscandoRutas =
+                                ruta.stream()
+                                        .filter(rutas -> rutas.getRutaSTRING().equals(nuevarutaReArmada)) //buscan las rutas que son iguales a la que se le quito el ultimo elemento
+                                        .collect(Collectors.toList());
+                        var tamano4 = filtro_buscandoRutas.size()-1;
+
+                        rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                        rutaruta.getCarpeta().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta()); //no funciona porque está vacia
+                        rutaruta.getCarpeta().addAll(filtro_buscandoRutas.get(tamano4).getCarpeta());
+                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
+                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
                         ruta.add(rutaruta);
 
                     }
 
 
+
                     else {
-                        rutaruta.rutaSTRING = target.toLowerCase() + file + "/";
-                        rutaruta.carpeta.addAll(obtenerarchivocosas);//problema con recuperar carpeta
-                        rutaruta.archivo.addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
-                        rutaruta.usuariocarpeta = getLogueados().get(0);
+                        rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                        rutaruta.getCarpeta().addAll(obtenerarchivocosas);//problema con recuperar carpeta
+                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
                         ruta.add(rutaruta);
 
                     }
@@ -819,32 +861,30 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             if (currentDrivesletter.contains(drivev) && existedrive.length == 1){
                 if(!driveamover.isEmpty()){
 
-                    rutaruta.rutaSTRING = target.toLowerCase()+ file + "/";
+                    rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
 
-                    rutaruta.carpeta.addAll(obtenerarchivocosas);//problema con recuperar carpeta
-                    rutaruta.carpeta.addAll(driveamover.get(tamano2).getCarpeta());
+                    rutaruta.getCarpeta().addAll(obtenerarchivocosas);//problema con recuperar carpeta
+                    rutaruta.getCarpeta().addAll(driveamover.get(tamano2).getCarpeta());
 
-                    rutaruta.archivo.addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
-                    rutaruta.archivo.addAll(driveamover.get(tamano2).getArchivo());
-                    rutaruta.usuariocarpeta = getLogueados().get(0);
+                    rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
+                    rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
                     ruta.add(rutaruta);
                 }
                 else{
 
-                    rutaruta.rutaSTRING = target.toLowerCase()+ file + "/";
-                    rutaruta.carpeta.addAll(obtenerarchivocosas);//problema con recuperar carpeta
-                    rutaruta.archivo.addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
-                    rutaruta.usuariocarpeta = getLogueados().get(0);
+                    rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                    rutaruta.getCarpeta().addAll(obtenerarchivocosas);//problema con recuperar carpeta
+                    rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
+                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
                     ruta.add(rutaruta);
 
                 }
             }
         }
+    }
 
-
-
-
-
+    public void move(String fie, String target){
 
 
 

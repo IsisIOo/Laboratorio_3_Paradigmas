@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 
 public class Path {
 
-    String rutaSTRING;
-    List<Chapter> carpeta;
-    List<File> archivo;
-    String  usuariocarpeta;
-    Date fechaCreacion;
+    private String rutaSTRING;
+    private List<Chapter> carpeta;
+    private List<File> archivo;
+    private String  usuariocarpeta;
+    private Date fechaCreacion;
 
     public Path() {
         this.rutaSTRING = rutaSTRING;
@@ -52,6 +52,22 @@ public class Path {
 
     public Date getFechaCreacion() {
         return fechaCreacion;
+    }
+
+    public void setRutaSTRING(String rutaSTRING) {
+        this.rutaSTRING = rutaSTRING;
+    }
+
+    public void setCarpeta(List<Chapter> carpeta) {
+        this.carpeta = carpeta;
+    }
+
+    public void setArchivo(List<File> archivo) {
+        this.archivo = archivo;
+    }
+
+    public void setUsuariocarpeta(String usuariocarpeta) {
+        this.usuariocarpeta = usuariocarpeta;
     }
 }
 
