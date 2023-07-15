@@ -3,16 +3,16 @@ package org.example;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class menu_ioyanedel_21168603 {
+public class Menu_21168603_ioyanedelalvarez {
         private boolean exitmenu;
-        private isidoraoyanedel21168603 sistema;
+        private System_21168603_ioyanedelalvarez sistema;
 
-        public menu_ioyanedel_21168603(){
+        public Menu_21168603_ioyanedelalvarez(){
             this.exitmenu = false;
-            this.sistema = new isidoraoyanedel21168603(null);
+            this.sistema = new System_21168603_ioyanedelalvarez(null);
         }
 
-    public isidoraoyanedel21168603 getSistema() {
+    public System_21168603_ioyanedelalvarez getSistema() {
         return sistema;
     }
 
@@ -62,7 +62,7 @@ public class menu_ioyanedel_21168603 {
         Scanner entrada = new Scanner(System.in);
         System.out.print("Ingrese el nombre : ");
         String nombre = entrada.nextLine();
-        this.sistema = new isidoraoyanedel21168603(nombre);
+        this.sistema = new System_21168603_ioyanedelalvarez(nombre);
     }
 
     private void menu_modificar(){

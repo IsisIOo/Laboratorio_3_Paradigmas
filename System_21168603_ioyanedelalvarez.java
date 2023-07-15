@@ -3,12 +3,12 @@ package org.example;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
+public class System_21168603_ioyanedelalvarez implements Interfaz_IOyanedel_21168603{
     //esta cosa es sistema
     private String nombre;
     private Date fechaCreacrion;
-    private List<Drive> drives;
-    private List<Usuario> usuarios;
+    private List<Drive_21168603_ioyanedelalvarez> drives;
+    private List<Usuario_21168603_ioyanedelalvarez> usuarios;
     private List<String> logueados;
     private List<String> actual;
 
@@ -21,7 +21,12 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
     //RF3 CONSTRUCTOR DE FILESYSTEM
     //Dom: nombre
     //Rec: filesystem
-    public isidoraoyanedel21168603(String nombre) {
+
+    /**
+     * Funcion que crea estructura del sistema
+     * @param nombre nombre del sistema
+     */
+    public System_21168603_ioyanedelalvarez(String nombre) {
         this.nombre = nombre;
         this.fechaCreacrion = new Date();
         this.drives = new ArrayList<>(); //asumir que es asi
@@ -35,10 +40,17 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
     //RF4 TDA SYSTEM - ADD DRIVE
     //Dom: letter, name, capacity
     //no puedo tener drives repetidos
+
+    /**
+     * Funcion 4  Método que permite añadir una unidad a un sistema. La letra de la unidad debe ser única.
+     * @param letter letra del drive
+     * @param name nombre del drive
+     * @param capacity capcidad del dirve
+     */
     public void addDrive(String letter, String name, int capacity) {
-        var Drive = new Drive(letter, name, capacity);
+        var Drive = new Drive_21168603_ioyanedelalvarez(letter, name, capacity);
         List<String> currentLetters = new ArrayList<>();
-        for (Drive disco : drives) {
+        for (Drive_21168603_ioyanedelalvarez disco : drives) {
             currentLetters.add(disco.getLetter());
         }
         if (!currentLetters.contains(letter)) {
@@ -51,10 +63,10 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
     //Dom: userName (String)
     //no puedo tener usuarios repetidos
     public void register(String nombre) {
-        var user = new Usuario(nombre);
+        var user = new Usuario_21168603_ioyanedelalvarez(nombre);
         var currentUsers =
                 usuarios.stream()
-                        .map(Usuario::getNombre)
+                        .map(Usuario_21168603_ioyanedelalvarez::getNombre)
                         .collect(Collectors.toList());
         if (!currentUsers.contains(nombre)) {
             usuarios.add(user);
@@ -71,7 +83,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
     public void login(String nombre) {
         var currentUsers =
                 usuarios.stream()
-                        .map(Usuario::getNombre)
+                        .map(Usuario_21168603_ioyanedelalvarez::getNombre)
                         .collect(Collectors.toList());
         if (currentUsers.contains(nombre) && logueados.isEmpty()) {
             logueados.add(nombre);
@@ -96,7 +108,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
     public void switchDrive(String letter){
         var currentLetters =
                 drives.stream()
-                        .map(Drive::getLetter)
+                        .map(Drive_21168603_ioyanedelalvarez::getLetter)
                         .collect(Collectors.toList());
 
         if (currentLetters.contains(letter) && !logueados.isEmpty()) {
@@ -114,7 +126,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
             var currentChapters =
                     ruta.get(tamano).getCarpeta().stream()
-                            .map(Chapter::getNombre)
+                            .map(Chapter_21168603_ioyanedelalvarez::getNombre)
                             .collect(Collectors.toList());
             ruta1.setUsuariocarpeta((getLogueados().get(0))); //obtiene solo el string
             var drive_minuscula = actual.get(0).toLowerCase();
@@ -151,10 +163,10 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
     public void mkdir(String chaptername){
         var rutaruta = new Path();
         var tamano = ruta.size()-1;
-        var carpeta1 = new Chapter(chaptername);
+        var carpeta1 = new Chapter_21168603_ioyanedelalvarez(chaptername);
         var currentChapters =
                 ruta.get(tamano).getCarpeta().stream()
-                        .map(Chapter::getNombre)
+                        .map(Chapter_21168603_ioyanedelalvarez::getNombre)
                         .collect(Collectors.toList());
         if (!currentChapters.contains(chaptername)) {
             rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
@@ -171,7 +183,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         var tamano = ruta.size()-1;
         var currentChapters =
                 ruta.get(tamano).getCarpeta().stream()
-                        .map(Chapter::getNombre)
+                        .map(Chapter_21168603_ioyanedelalvarez::getNombre)
                         .collect(Collectors.toList());
 
         //otros if de los comodines LSITOS
@@ -378,7 +390,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             System.out.println("Esa opción no está disponible.");
         }
 
-        var newFile = new File(nombre_de_archivo, tipode1, content_de_archivo, seg2, seg1);
+        var newFile = new File_21168603_ioyanedelalvarez(nombre_de_archivo, tipode1, content_de_archivo, seg2, seg1);
         addFile(newFile);
     }
 
@@ -446,13 +458,13 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         Scanner titulo_Archivo = new Scanner(System.in);
         System.out.print("Ingrese el titulo de su archivo:");
         String nombre_de_archivo =titulo_Archivo.nextLine();
-        var newFile = new File(nombre_de_archivo, tipode1, content_de_archivo, seg2, seg1);
+        var newFile = new File_21168603_ioyanedelalvarez(nombre_de_archivo, tipode1, content_de_archivo, seg2, seg1);
         addFile(newFile);
     }
 
 
 
-    public void addFile(File archivo){
+    public void addFile(File_21168603_ioyanedelalvarez archivo){
         var lecturas = archivo.getAtributo_lect();
         var seguridad = archivo.getAtributo_Seg();
         var contenidos= archivo.getContenido();
@@ -460,7 +472,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         var tamano = ruta.size()-1;
         var currentFiles =
                 ruta.get(tamano).getArchivo().stream()
-                        .map(File::getNombre)
+                        .map(File_21168603_ioyanedelalvarez::getNombre)
                         .collect(Collectors.toList());
         if (!currentFiles.contains(archivo.getNombre())){
             var archivos_actuales = getRuta().get(tamano).getArchivo();
@@ -487,7 +499,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
             var tamano = ruta.size() - 1;
             var currentFiles =
                     ruta.get(tamano).getArchivo().stream()
-                            .map(File::getNombre)
+                            .map(File_21168603_ioyanedelalvarez::getNombre)
                             .collect(Collectors.toList());
 
             if (currentFiles.contains(path)) {
@@ -561,7 +573,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 //caso carpeta simple
             var currentChapters =
                 ruta.get(tamano).getCarpeta().stream()
-                        .map(Chapter::getNombre)
+                        .map(Chapter_21168603_ioyanedelalvarez::getNombre)
                         .collect(Collectors.toList());
 
             if(currentChapters.contains(path)){
@@ -604,7 +616,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
         var currentDrivesletter = //obtiene las letras de todos los drives
                 drives.stream()
-                        .map(Drive::getLetter)
+                        .map(Drive_21168603_ioyanedelalvarez::getLetter)
                         .collect(Collectors.toList());
 
         var driveamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
@@ -634,7 +646,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
         //obtiene las carpetas del destino
         var currentChapters =
                 driveamover.get(tamano2).getCarpeta().stream()
-                        .map(Chapter::getNombre)
+                        .map(Chapter_21168603_ioyanedelalvarez::getNombre)
                         .collect(Collectors.toList());
         
         //caso nunca abri esa ruta, por lo tanto debo saber si existe el drive letra y si existe la carpeta
@@ -710,7 +722,7 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
             var currentDrivesletter = //obtiene las letras de todos los drives
                     drives.stream()
-                            .map(Drive::getLetter)
+                            .map(Drive_21168603_ioyanedelalvarez::getLetter)
                             .collect(Collectors.toList());
             var driveamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
                     ruta.stream()
@@ -722,12 +734,12 @@ public class isidoraoyanedel21168603 implements Interfaz_IOyanedel_21168603{
 
             var currentChaptersLUGARDESTINO =
                     driveamover.get(tamano2).getCarpeta().stream()
-                            .map(Chapter::getNombre)
+                            .map(Chapter_21168603_ioyanedelalvarez::getNombre)
                             .collect(Collectors.toList());
 
             var currentChaptersLUGARORIGEN =
                     ruta.get(tamano).getCarpeta().stream()
-                            .map(Chapter::getNombre)
+                            .map(Chapter_21168603_ioyanedelalvarez::getNombre)
                             .collect(Collectors.toList());
 
             var obteneractualizacioncarpetamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
