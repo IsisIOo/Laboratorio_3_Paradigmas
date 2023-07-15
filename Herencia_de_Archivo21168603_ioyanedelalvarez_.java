@@ -1,6 +1,6 @@
 package org.example;
 
-public class Ioyanedel_21168603_Herencia_de_Archivo {
+public class Herencia_de_Archivo21168603_ioyanedelalvarez_ {
     private String nombre; //no se si ponerle private, me caga el to string
     private String extension;
     private String contenido;
@@ -27,7 +27,7 @@ public class Ioyanedel_21168603_Herencia_de_Archivo {
      * @param atributo_Seg atributo de seguridad del archivo (oculto o no oculto)
      * @param atributo_lect atributo de lectura (solo lectura o normal editable)
      */
-    public Ioyanedel_21168603_Herencia_de_Archivo(String nombre, String extension, String contenido, String atributo_Seg, String atributo_lect) {
+    public Herencia_de_Archivo21168603_ioyanedelalvarez_(String nombre, String extension, String contenido, String atributo_Seg, String atributo_lect) {
         this.nombre = nombre;
         this.extension = extension;
         this.contenido = contenido;

@@ -1,6 +1,6 @@
 package org.example;
 
-public class Chapter_21168603_ioyanedelalvarez implements Interfaz_chapter_ioyanedel_21168603{
+public class Chapter_21168603_ioyanedelalvarez implements Interfaz_chapter_21168603_ioyanedel {
     private String nombre;
 
     /**

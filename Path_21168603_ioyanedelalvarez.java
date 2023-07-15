@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Path {
+public class Path_21168603_ioyanedelalvarez {
 
     private String rutaSTRING;
     private List<Chapter_21168603_ioyanedelalvarez> carpeta;
@@ -15,7 +15,7 @@ public class Path {
     /**
      *Funcion que crea path
      */
-    public Path() {
+    public Path_21168603_ioyanedelalvarez() {
         this.rutaSTRING = rutaSTRING;
         this.carpeta = new ArrayList<>();
         this.archivo = new ArrayList<>();

@@ -1,6 +1,6 @@
 package org.example;
 
-public interface Interfaz_IOyanedel_21168603 {
+public interface Interfaz_system_21168603_ioyanedel {
     void addDrive(String letter, String name, int capacity);
     void register(String nombre);
     void login(String nombre);

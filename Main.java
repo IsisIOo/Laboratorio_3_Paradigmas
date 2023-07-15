@@ -11,7 +11,7 @@ public class Main {
 
 
             var filesystem = new System_21168603_ioyanedelalvarez("mi sistema");
-            var pathpath = new Path();
+            var pathpath = new Path_21168603_ioyanedelalvarez();
             System.out.println(filesystem);
 
             filesystem.addDrive("D", "Oveja", 400);

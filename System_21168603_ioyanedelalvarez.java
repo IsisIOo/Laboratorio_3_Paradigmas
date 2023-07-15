@@ -3,7 +3,7 @@ package org.example;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class System_21168603_ioyanedelalvarez implements Interfaz_IOyanedel_21168603{
+public class System_21168603_ioyanedelalvarez implements Interfaz_system_21168603_ioyanedel {
     //esta cosa es sistema
     private String nombre;
     private Date fechaCreacrion;
@@ -14,7 +14,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_IOyanedel_2116
 
     //List<Chapter> carpeta; //lo estoy usando en path
 
-    List<Path> ruta;
+    List<Path_21168603_ioyanedelalvarez> ruta;
 
 
 
@@ -120,7 +120,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_IOyanedel_2116
                 actual.add(letter);
             }
         }
-        var ruta1 = new Path();
+        var ruta1 = new Path_21168603_ioyanedelalvarez();
         var tamano = ruta.size()-1;
         if(tamano > 1){
 
@@ -161,7 +161,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_IOyanedel_2116
     //Dom: userName (String)
     //no puedo tener mas de un drive
     public void mkdir(String chaptername){
-        var rutaruta = new Path();
+        var rutaruta = new Path_21168603_ioyanedelalvarez();
         var tamano = ruta.size()-1;
         var carpeta1 = new Chapter_21168603_ioyanedelalvarez(chaptername);
         var currentChapters =
@@ -179,7 +179,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_IOyanedel_2116
     }
 
     public void cd (String camino_seleccionado){
-        var rutaruta = new Path();
+        var rutaruta = new Path_21168603_ioyanedelalvarez();
         var tamano = ruta.size()-1;
         var currentChapters =
                 ruta.get(tamano).getCarpeta().stream()
@@ -468,7 +468,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_IOyanedel_2116
         var lecturas = archivo.getAtributo_lect();
         var seguridad = archivo.getAtributo_Seg();
         var contenidos= archivo.getContenido();
-        var rutaruta = new Path();
+        var rutaruta = new Path_21168603_ioyanedelalvarez();
         var tamano = ruta.size()-1;
         var currentFiles =
                 ruta.get(tamano).getArchivo().stream()
@@ -495,7 +495,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_IOyanedel_2116
 
         //caso archivo
         //if(path.contains('.')) {
-            var rutaruta = new Path();
+            var rutaruta = new Path_21168603_ioyanedelalvarez();
             var tamano = ruta.size() - 1;
             var currentFiles =
                     ruta.get(tamano).getArchivo().stream()
@@ -603,7 +603,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_IOyanedel_2116
         String[] file1 = file.split("\\.");
 
         if(file.contains(".")){
-        var rutaruta = new Path();
+        var rutaruta = new Path_21168603_ioyanedelalvarez();
         //caso de mover a otro drive
         String[] existedrive1 = target.split(":/");
         String[] existedrive = target.split("/");
@@ -715,7 +715,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_IOyanedel_2116
     else { //el largo del archivo a mover separado por / es ==0 (esto ocurre porque cuando muevo carpeta no tengo  .
             //agregar como recueprar los archivos  de la carpeta y agregarlos a los archivos existentes a de la carpeta de destino
             // a las carpetas de la ruta de destino hay que agregarle la carpeta que queremos mover
-            var rutaruta = new Path();
+            var rutaruta = new Path_21168603_ioyanedelalvarez();
             String[] existedrive1 = target.split(":/");
             String[] existedrive = target.split("/");
             var drivev = existedrive1[0];
@@ -934,7 +934,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_IOyanedel_2116
         return actual;
     }
 
-    public List<Path> getRuta() {
+    public List<Path_21168603_ioyanedelalvarez> getRuta() {
         return ruta;
     }
 }

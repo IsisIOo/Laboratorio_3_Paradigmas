@@ -1,6 +1,6 @@
 package org.example;
 
-public class File_21168603_ioyanedelalvarez extends Ioyanedel_21168603_Herencia_de_Archivo{
+public class File_21168603_ioyanedelalvarez extends Herencia_de_Archivo21168603_ioyanedelalvarez_ {
 
 
     /**
