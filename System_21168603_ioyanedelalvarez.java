@@ -23,7 +23,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
     //Rec: filesystem
 
     /**
-     * Funcion que crea estructura del sistema
+     * FUNCION 1 TDA system - constructor  Método constructor de un sistema. Deja registro de la fecha de creación.
      * @param nombre nombre del sistema
      */
     public System_21168603_ioyanedelalvarez(String nombre) {
@@ -42,7 +42,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
     //no puedo tener drives repetidos
 
     /**
-     * Funcion 4  Método que permite añadir una unidad a un sistema. La letra de la unidad debe ser única.
+     * Funcion 2 ADD-DRIVE  Método que permite añadir una unidad a un sistema. La letra de la unidad debe ser única.
      * @param letter letra del drive
      * @param name nombre del drive
      * @param capacity capcidad del dirve
@@ -62,6 +62,11 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
     //RF5 TDA SYSTEM - REGISTER
     //Dom: userName (String)
     //no puedo tener usuarios repetidos
+
+    /**
+     * FUNCION 3 REGISTER  Método que permite registrar un nuevo usuario al sistema. El nombre de usuario es único y no puede ser duplicado.
+     * @param nombre NOMBRE DEL USUARIO A REGISTRAR
+     */
     public void register(String nombre) {
         var user = new Usuario_21168603_ioyanedelalvarez(nombre);
         var currentUsers =
@@ -73,13 +78,18 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
         }
     }
 
+    /**
+     * Funcion que retorna el usuario logueado en el sistema
+     * @return usuario logueado
+     */
     public List<String> getLogueados() {
         return logueados;
     }
 
-    //RF6 TDA SYSTEM - LOGIN
-    //Dom: userName (String)
-    //no puedo tener mas de un usuario
+    /**
+     * FUNCION 4 LOGIN Método que permite iniciar sesión con un usuario del sistema, solo si éste existe.
+     * @param nombre nombre del usuario a loguear
+     */
     public void login(String nombre) {
         var currentUsers =
                 usuarios.stream()
@@ -97,14 +107,21 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
     //RF7 TDA SYSTEM - LOGOUT
     //Dom: void
 
+    /**
+     * FUNCION 5 LOGOUT Método que permite cerrar la sesión de un usuario en el sistema.
+     */
+
     public void logout (){
 
         logueados.clear();
     }
 
-    //RF8 TDA SYSTEM - LOGIN
-    //Dom: userName (String)
-    //no puedo tener mas de un drive
+
+    /**
+     * FUNCION 6 SWITCHDRIVE Permite fijar la unidad en la que el usuario realizará acciones.
+     * El método solo debe funcionar cuando hay un usuario con sesión iniciada en el sistema a partir del método de login.
+     * @param letter letra del drive al que se va a cambiar
+     */
     public void switchDrive(String letter){
         var currentLetters =
                 drives.stream()
@@ -160,6 +177,13 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
     //RF9 TDA SYSTEM - mkDir
     //Dom: userName (String)
     //no puedo tener mas de un drive
+
+    /**
+     * FUNCION 7 MKDIR Método que permite crear directorio dentro de una unidad a partir del nombre especificado.
+     * Internamente el método añade datos relativos a usuario creador, fecha de creación, fecha de última modificación y
+     * atributos de seguridad como los señalados en el enunciado general
+     * @param chaptername nombre de la carpeta que se creará
+     */
     public void mkdir(String chaptername){
         var rutaruta = new Path_21168603_ioyanedelalvarez();
         var tamano = ruta.size()-1;
@@ -168,7 +192,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
                 ruta.get(tamano).getCarpeta().stream()
                         .map(Chapter_21168603_ioyanedelalvarez::getNombre)
                         .collect(Collectors.toList());
-        if (!currentChapters.contains(chaptername)) {
+        if (!currentChapters.contains(chaptername) && !logueados.isEmpty()) {
             rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
             rutaruta.getCarpeta().addAll(ruta.get(tamano).getCarpeta());
             rutaruta.getCarpeta().add(carpeta1);//agrega la carpeta a las carpetas, quiero que se agregue a las que habian antes
@@ -178,6 +202,12 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
         }
     }
 
+    /**
+     * FUNCION 8 CD Método que permite cambiar la ruta (path) donde se realizarán las próximas operaciones. cd permite cambiarse a un directorio especificado a partir de la ruta señalada en un String. Además,
+     * contará con los comodines especiales: “.”, “..” y “/” (se usa slash en lugar de backslash) que permitirán referirse a la carpeta actual,
+     * regresar a la carpeta del nivel anterior siguiendo la ruta actual del usuario y volver a la raíz de la unidad respectivamente.
+     * @param camino_seleccionado carpeta seleccionada para avanzar
+     */
     public void cd (String camino_seleccionado){
         var rutaruta = new Path_21168603_ioyanedelalvarez();
         var tamano = ruta.size()-1;
@@ -187,7 +217,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
                         .collect(Collectors.toList());
 
         //otros if de los comodines LSITOS
-        if (camino_seleccionado == "././././" || camino_seleccionado == "." || camino_seleccionado == "./"){
+        if ((camino_seleccionado == "././././" || camino_seleccionado == "." || camino_seleccionado == "./") && !logueados.isEmpty()){
             rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
             rutaruta.setUsuariocarpeta(getLogueados().get(0));
             rutaruta.setCarpeta(ruta.get(tamano).getCarpeta());
@@ -196,13 +226,13 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
         }
 
         //caso normal
-        if (currentChapters.contains(camino_seleccionado)){
+        if (currentChapters.contains(camino_seleccionado) && !logueados.isEmpty()){
             //AGREGAR ARCHIVOS
             var filtro_buscandoRutasNORMAL =
                     ruta.stream()
                             .filter(rutas -> rutas.getRutaSTRING().equals(ruta.get(tamano).getRutaSTRING() + camino_seleccionado + "/"))
                             .collect(Collectors.toList());
-            if (filtro_buscandoRutasNORMAL.size() >= 1) {
+            if (filtro_buscandoRutasNORMAL.size() >= 1 && !logueados.isEmpty()) {
                 var tamano3 = filtro_buscandoRutasNORMAL.size() - 1;
                 rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING() + camino_seleccionado + "/");
                 rutaruta.getArchivo().addAll((filtro_buscandoRutasNORMAL.get(tamano3).getArchivo()));
@@ -218,17 +248,17 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
         }
 
 //caso /.folder1
-        if(camino_seleccionado.contains("./")) {
+        if(camino_seleccionado.contains("./") && !logueados.isEmpty()) {
             String[] titulo_texto_sinbarra = camino_seleccionado.split("./"); //quita el ./
             var tituloreal = titulo_texto_sinbarra[1]; //obtiene el titulo string sin ./ desde la lista
             String total = String.join("", tituloreal); //convierte la lista en string
 
-            if (currentChapters.contains(total)) { //busca el titulo string
+            if (currentChapters.contains(total) && !logueados.isEmpty()) { //busca el titulo string
                 var filtro_buscandoRutasBARRA =
                         ruta.stream()
                                 .filter(rutas -> rutas.getRutaSTRING().equals(ruta.get(tamano).getRutaSTRING() + total + "/"))
                                 .collect(Collectors.toList());
-                if (filtro_buscandoRutasBARRA.size() >= 1) {
+                if (filtro_buscandoRutasBARRA.size() >= 1 && !logueados.isEmpty()) {
                     var tamano3 = filtro_buscandoRutasBARRA.size() - 1;
                     rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING() + total + "/");
                     rutaruta.getArchivo().addAll((filtro_buscandoRutasBARRA.get(tamano3).getArchivo()));
@@ -240,7 +270,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
         }
 
         //caso de cuando quiere devolverse a la raiz recupera las cosas de la raiz
-        if(camino_seleccionado == "/") { //regresa a la raiz de la unidad
+        if(camino_seleccionado == "/" && !logueados.isEmpty()) { //regresa a la raiz de la unidad
             String[] raiz_unidad = ruta.get(tamano).getRutaSTRING().split("/");
             var raiz_unidad1 = raiz_unidad[0];
             //hacer if que si raiz_ unidad0 = actual con / obtenga las carpetas o algo asi
@@ -249,7 +279,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
                             .filter(rutas -> rutas.getRutaSTRING().equals(actual.get(0).toLowerCase() + ":/")) //rutas=creado aqui
                             .collect(Collectors.toList());
 
-            if (filtro_raicesUnidad.size() > 1) { //recupera y asigna luego del filtro
+            if (filtro_raicesUnidad.size() > 1 && !logueados.isEmpty()) { //recupera y asigna luego del filtro
                 var tamano2 = filtro_raicesUnidad.size() - 1;
                 rutaruta.getCarpeta().addAll(filtro_raicesUnidad.get(tamano2).getCarpeta());
                 rutaruta.setRutaSTRING(raiz_unidad1 + "/");
@@ -260,7 +290,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
 
             //caso de regresar a la anterior
 
-        if(camino_seleccionado == "..") {
+        if(camino_seleccionado == ".." && !logueados.isEmpty()) {
             var borrar_ultimo = ruta.get(tamano).getRutaSTRING().split("/"); //hace lista de string[]
             var largototal = borrar_ultimo.length - 1;
             String[] copiaderutasinultimoelem = Arrays.copyOf(borrar_ultimo, largototal);
@@ -271,7 +301,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
                     ruta.stream()
                             .filter(rutas -> rutas.getRutaSTRING().equals(nuevarutaReArmada))
                             .collect(Collectors.toList());
-            if (filtro_buscandoRutas.size() >= 1) {
+            if (filtro_buscandoRutas.size() >= 1 && !logueados.isEmpty()) {
                 var tamano3 = filtro_buscandoRutas.size() - 1;
                 rutaruta.setRutaSTRING(nuevarutaReArmada);
                 rutaruta.getArchivo().addAll((filtro_buscandoRutas.get(tamano3).getArchivo()));
@@ -463,7 +493,10 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
     }
 
 
-
+    /**
+     * FUNCION 9 ADDFILE Método que permite añadir un archivo en la ruta actual.
+     * @param archivo DATOS DEL ARCHIVO PARA AGREGAR
+     */
     public void addFile(File_21168603_ioyanedelalvarez archivo){
         var lecturas = archivo.getAtributo_lect();
         var seguridad = archivo.getAtributo_Seg();
@@ -474,7 +507,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
                 ruta.get(tamano).getArchivo().stream()
                         .map(File_21168603_ioyanedelalvarez::getNombre)
                         .collect(Collectors.toList());
-        if (!currentFiles.contains(archivo.getNombre())){
+        if (!currentFiles.contains(archivo.getNombre()) && !logueados.isEmpty() ){
             var archivos_actuales = getRuta().get(tamano).getArchivo();
             rutaruta.getArchivo().add(archivo);
             rutaruta.getArchivo().addAll(archivos_actuales);
@@ -491,6 +524,11 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
         }
     }
 
+    /**
+     * FUNCION 10 DEL Método para eliminar un archivo o varios archivos en base a un patrón determinado.
+     * Esta versión también puede eliminar una carpeta completa con todos sus subdirectorios. El contenido eliminado se va a la papelera.
+     * @param path Cosa a borrar YA SEA ARCHIVO O CARPETA
+     */
     public void del(String path){
 
         //caso archivo
@@ -502,7 +540,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
                             .map(File_21168603_ioyanedelalvarez::getNombre)
                             .collect(Collectors.toList());
 
-            if (currentFiles.contains(path)) {
+            if (currentFiles.contains(path) && !logueados.isEmpty()) {
                 var filtro_buscandoTITULOSRutas =
                         ruta.get(tamano).getArchivo().stream()
                                 .filter(rutas -> !rutas.getNombre().equals(path))
@@ -528,7 +566,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
                 ruta.add(rutaruta);
 
             }*/
-            if(path == "." || path == "*"){
+            if((path == "." || path == "*") && !logueados.isEmpty()){
                 rutaruta.setCarpeta(ruta.get(tamano).getCarpeta());
                 rutaruta.setUsuariocarpeta(getLogueados().get(0));
                 rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
@@ -542,7 +580,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
 
 
             //caso de titulo.extension
-            if(largo == 2 && !tituloTitulo.equals("")) {
+            if(largo == 2 && !tituloTitulo.equals("") && !logueados.isEmpty()) {
                 var extensionTitulo = titulo_separado[1];
                 if (currentFiles.contains(tituloTitulo)) {
                     var filtro_buscandoTITULOSRutas =
@@ -558,7 +596,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
             }
 
             //caso extension sola
-            if(largo == 2 && tituloTitulo.equals("")){
+            if(largo == 2 && tituloTitulo.equals("") && !logueados.isEmpty()){
                 var filtro_buscandoEXTENSIONRutas =
                         ruta.get(tamano).getArchivo().stream()
                                 .filter(rutas -> !rutas.getExtension().equals(path))
@@ -576,7 +614,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
                         .map(Chapter_21168603_ioyanedelalvarez::getNombre)
                         .collect(Collectors.toList());
 
-            if(currentChapters.contains(path)){
+            if(currentChapters.contains(path) && !logueados.isEmpty()){
                 var filtro_borrarUNAcarpeta =
                         ruta.get(tamano).getCarpeta().stream()
                                 .filter((rutas -> !rutas.getNombre().equals(path)))
@@ -598,268 +636,700 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
 
         }
 
+    /**
+     * FUNCION 10 COPY Método para copiar un archivo o carpeta desde una ruta origen a una ruta destino.
+     * @param file archivo o carpeta para mover
+     * @param target destino del archivo o carpeta
+     */
     public void copy (String file, String target){
         //si es un archivo file podrá separarse por punto puesto que lo recibe como entrada como foo.txt, en cambio si recibe carpeta, solo será el nombre
-        String[] file1 = file.split("\\.");
-
-        if(file.contains(".")){
-        var rutaruta = new Path_21168603_ioyanedelalvarez();
-        //caso de mover a otro drive
-        String[] existedrive1 = target.split(":/");
-        String[] existedrive = target.split("/");
-        var drivev= existedrive1[0];
-
-        //conseguimos la penultima posición del registro de ruta
-        int penultima_posicion = ruta.size() - 2;
 
 
-
-        var currentDrivesletter = //obtiene las letras de todos los drives
-                drives.stream()
-                        .map(Drive_21168603_ioyanedelalvarez::getLetter)
-                        .collect(Collectors.toList());
-
-        var driveamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
-                ruta.stream()
-                        .filter(rutas->rutas.getRutaSTRING().equals(drivev.toLowerCase() + ":" + "/"))
-                        .collect(Collectors.toList());
-
-        var tamano2 = driveamover.size()-1;
-        var tamano = ruta.size()-1;
-
-        String[] tituloyextension = file.split("\\.");
-        var titulo = tituloyextension[0];//titulo del archivo
-        var extension = tituloyextension[1]; //extension del archivo
-
-            //Consigue los datos del archivo
-        var obtenerarchivocosas =
-                ruta.get(tamano).getArchivo().stream()
-                        .filter(File -> File.getNombre().equals(titulo) && File.getExtension().equals("." + extension))
-                        .collect(Collectors.toList());
-
-        //recupera los datos de la ruta de destino
-        var recuperardatosderuta =
-                ruta.stream()
-                        .filter(rutas->rutas.getRutaSTRING().equals(target.toLowerCase()))
-                        .collect(Collectors.toList());
-
-        //obtiene las carpetas del destino
-        var currentChapters =
-                driveamover.get(tamano2).getCarpeta().stream()
-                        .map(Chapter_21168603_ioyanedelalvarez::getNombre)
-                        .collect(Collectors.toList());
-        
-        //caso nunca abri esa ruta, por lo tanto debo saber si existe el drive letra y si existe la carpeta
-        //cuando hay drive y una carpeta, ejemplo: "c:/folder1/"
-        if(currentDrivesletter.contains(drivev) && existedrive.length>1){
-
-            var carpetadestino = existedrive[1];
-
-
-            //ruta1.carpeta.addAll(rutasderutas.get(tamano2).carpeta); //si d:/ contuene la carpeta de destino
-            if(currentChapters.contains(carpetadestino)) {
-                //caso donde nunca se trabajo con d:/carpeta por lo tanto todos sus listas son vacias
-                if (recuperardatosderuta.isEmpty()) {
-                    rutaruta.setRutaSTRING(target.toLowerCase());
-                    rutaruta.getArchivo().addAll(obtenerarchivocosas);
-                    //rutaruta.archivo.addAll(recuperardatosderuta.get(tamano2).getArchivo());
-                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
-                    //rutaruta.carpeta = new ArrayList<>();
-                    ruta.add(rutaruta);
-
-                }
-                else { //caso cuando existe una ruta en la que se trabajo el d:/carpeta
-                    rutaruta.setRutaSTRING(target.toLowerCase());
-                    rutaruta.getArchivo().addAll(obtenerarchivocosas);
-                    rutaruta.getArchivo().addAll(recuperardatosderuta.get(tamano2).getArchivo());
-                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
-                    rutaruta.setCarpeta(recuperardatosderuta.get(tamano2).getCarpeta());
-                    ruta.add(rutaruta);
-                }
-
-            }
-
-
- //caso donde quiero mover a d:/ sin carpeta
-            else if(currentDrivesletter.contains(drivev) && existedrive.length==1){
-                rutaruta.setRutaSTRING(target.toLowerCase());
-                rutaruta.getArchivo().addAll(obtenerarchivocosas);
-                rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
-                rutaruta.setUsuariocarpeta(getLogueados().get(0));
-                rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
-                ruta.add(rutaruta);
-            }
-
-
-            else{
-                rutaruta.setRutaSTRING(target.toLowerCase());
-                rutaruta.getArchivo().addAll(obtenerarchivocosas);
-                rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
-                rutaruta.setUsuariocarpeta(getLogueados().get(0));
-                rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
-                ruta.add(rutaruta);
-            }
-
-        }
-
-        else {
-            rutaruta.setRutaSTRING(target.toLowerCase());
-            rutaruta.getArchivo().addAll(obtenerarchivocosas);
-            rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
-            rutaruta.setUsuariocarpeta(getLogueados().get(0));
-            rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
-            ruta.add(rutaruta);
-        }
-        }
-
-    else { //el largo del archivo a mover separado por / es ==0 (esto ocurre porque cuando muevo carpeta no tengo  .
-            //agregar como recueprar los archivos  de la carpeta y agregarlos a los archivos existentes a de la carpeta de destino
-            // a las carpetas de la ruta de destino hay que agregarle la carpeta que queremos mover
+        if(file.contains(".") && !logueados.isEmpty()){
+            String[] file1 = file.split("\\.");
             var rutaruta = new Path_21168603_ioyanedelalvarez();
+            var ruta1 = new Path_21168603_ioyanedelalvarez();
+            //caso de mover a otro drive
             String[] existedrive1 = target.split(":/");
             String[] existedrive = target.split("/");
-            var drivev = existedrive1[0];
+            var drivev= existedrive1[0];
+
+            //conseguimos la penultima posición del registro de ruta
+            var penultima_posicion = ruta.size() - 2;
+
+
 
             var currentDrivesletter = //obtiene las letras de todos los drives
                     drives.stream()
                             .map(Drive_21168603_ioyanedelalvarez::getLetter)
                             .collect(Collectors.toList());
+
             var driveamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
                     ruta.stream()
-                            .filter(rutas -> rutas.getRutaSTRING().equals(drivev.toLowerCase() + ":" + "/"))
+                            .filter(rutas->rutas.getRutaSTRING().equals(drivev.toLowerCase() + ":" + "/"))
                             .collect(Collectors.toList());
 
-            var tamano2 = driveamover.size() - 1;
-            var tamano = ruta.size() - 1;
+            var tamano2 = driveamover.size()-1;
+            var tamano = ruta.size()-1;
 
-            var currentChaptersLUGARDESTINO =
+            String[] tituloyextension = file.split("\\.");
+            var titulo = tituloyextension[0];//titulo del archivo
+            var extension = tituloyextension[1]; //extension del archivo
+
+                //Consigue los datos del archivo
+            var obtenerarchivocosas =
+                    ruta.get(tamano).getArchivo().stream()
+                            .filter(File -> File.getNombre().equals(titulo) && File.getExtension().equals("." + extension))
+                            .collect(Collectors.toList());
+
+            //recupera los datos de la ruta de destino
+            var recuperardatosderuta =
+                    ruta.stream()
+                            .filter(rutas->rutas.getRutaSTRING().equals(target.toLowerCase()))
+                            .collect(Collectors.toList());
+
+            //obtiene las carpetas del destino
+            var currentChapters =
                     driveamover.get(tamano2).getCarpeta().stream()
                             .map(Chapter_21168603_ioyanedelalvarez::getNombre)
                             .collect(Collectors.toList());
 
-            var currentChaptersLUGARORIGEN =
-                    ruta.get(tamano).getCarpeta().stream()
-                            .map(Chapter_21168603_ioyanedelalvarez::getNombre)
-                            .collect(Collectors.toList());
-
-            var obteneractualizacioncarpetamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
-                    ruta.stream()
-                            .filter(rutas -> rutas.getRutaSTRING().contains(file))
-                            .collect(Collectors.toList());
-
-            var tamano22 = obteneractualizacioncarpetamover.size() - 1;
-
-            var obteneractualizacioncarpetaRECIBIR = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
-                    ruta.stream()
-                            .filter(rutas -> rutas.getRutaSTRING().equals(target))
-                            .collect(Collectors.toList());
-            var tamano3 = obteneractualizacioncarpetaRECIBIR.size() - 1;
-
-            var obtenerarchivocosas = //obtiene la carpeta que tenga el mismo nombre que file para agregarla a su destino
-                    ruta.get(tamano).getCarpeta().stream() //no funciona porque en get tamano no existe esa carpeta
-                            .filter(Chapter -> Chapter.getNombre().equals(file))
-                            .collect(Collectors.toList());
-
-//se mueve a una carpeta lenght >1 se mueve a un drive (d:/) si el largo es 1
-            if (currentDrivesletter.contains(drivev) && existedrive.length > 1) {
+            //caso nunca abri esa ruta, por lo tanto debo saber si existe el drive letra y si existe la carpeta
+            //cuando hay drive y una carpeta, ejemplo: "c:/folder1/"
+            if(currentDrivesletter.contains(drivev) && existedrive.length>1){
 
                 var carpetadestino = existedrive[1];
 
 
-                //ruta1.carpeta.addAll(rutasderutas.get(tamano2).carpeta); //si d:/ contuene la carpeta de destino y si la ultima ruta abierta contiene la carpeta a mover
-                if (currentChaptersLUGARDESTINO.contains(carpetadestino) && (ruta.get(tamano).getCarpeta().contains(file) || ruta.get(tamano).getRutaSTRING().contains(file)) && !obteneractualizacioncarpetaRECIBIR.isEmpty()) {
-                    var obtenerdatoscarpeta = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
-                            ruta.stream()
-                                    .filter(rutas -> rutas.getRutaSTRING().equals(actual + ":/" + file.toLowerCase() + "/"))
-                                    .collect(Collectors.toList());
+                //ruta1.carpeta.addAll(rutasderutas.get(tamano2).carpeta); //si d:/ contuene la carpeta de destino
+                if(currentChapters.contains(carpetadestino)) {
+                    //caso donde nunca se trabajo con d:/carpeta por lo tanto todos sus listas son vacias
+                    if (recuperardatosderuta.isEmpty()) {
+                        rutaruta.setRutaSTRING(target.toLowerCase());
+                        rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                        //rutaruta.archivo.addAll(recuperardatosderuta.get(tamano2).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        //rutaruta.carpeta = new ArrayList<>();
+                        ruta.add(rutaruta);
+                        ruta.add(ruta.get(tamano));
 
-                    rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
-                    rutaruta.getCarpeta().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta());
-                    rutaruta.getCarpeta().addAll(obtenerarchivocosas);
-                    rutaruta.getArchivo().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
-                    rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
-                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
-                    ruta.add(rutaruta);
+                    }
 
-
-                }
-                else if (obteneractualizacioncarpetaRECIBIR.isEmpty() && obteneractualizacioncarpetamover.isEmpty()) {
-                    rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
-                    rutaruta.getCarpeta().addAll(obtenerarchivocosas);
-                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
-                    ruta.add(rutaruta);
-
-
-                }
-                else if (obteneractualizacioncarpetaRECIBIR.isEmpty() && !obteneractualizacioncarpetamover.isEmpty()) { //funciona
-                    var recuperardatosderuta =
-                            ruta.stream()
-                                    .filter(rutas->rutas.getRutaSTRING().equals(target.toLowerCase()))
-                                    .collect(Collectors.toList());
-
-                    var tamano5 = recuperardatosderuta.size()-1;
-
-                    var penultima_posicion = ruta.size() - 1;
-
-                   /* rutaruta.rutaSTRING = recuperardatosderuta.get(tamano5).rutaSTRING;
-                    rutaruta.carpeta.addAll(obtenerarchivocosas);
-                    rutaruta.carpeta.addAll(recuperardatosderuta.get(tamano5).getCarpeta());
-                    rutaruta.archivo.addAll(recuperardatosderuta.get(tamano5).getArchivo());
-                    rutaruta.usuariocarpeta = (recuperardatosderuta.get(tamano5).getUsuariocarpeta());
-                    ruta.add(rutaruta);*/
-
-
-                    rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
-                    rutaruta.getCarpeta().addAll(obteneractualizacioncarpetamover.get(tamano22).getCarpeta());
-                    rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
-                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
-                    ruta.add(rutaruta);
+                    else { //caso cuando existe una ruta en la que se trabajo el d:/carpeta
+                        rutaruta.setRutaSTRING(target.toLowerCase());
+                        rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                        rutaruta.getArchivo().addAll(recuperardatosderuta.get(tamano2).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        rutaruta.setCarpeta(recuperardatosderuta.get(tamano2).getCarpeta());
+                        ruta.add(rutaruta);
+                        ruta.add(ruta.get(tamano));
+                    }
 
                 }
-                else {
-                    if (ruta.get(tamano).getCarpeta().contains(file) && !obteneractualizacioncarpetamover.isEmpty()){
+
+
+     //caso donde quiero mover a d:/ sin carpeta
+                else if(currentDrivesletter.contains(drivev) && existedrive.length==1){
+                    rutaruta.setRutaSTRING(target.toLowerCase());
+                    rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                    rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                    rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
+                    ruta.add(rutaruta);
+                    ruta.add(ruta.get(tamano));
+                }
+
+
+                else{
+                    if(recuperardatosderuta.size()>=1){
+                        rutaruta.setRutaSTRING(target.toLowerCase());
+                        rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                        rutaruta.getArchivo().addAll(recuperardatosderuta.get(tamano2).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        rutaruta.setCarpeta(recuperardatosderuta.get(tamano2).getCarpeta());
+                        ruta.add(rutaruta);
+
+
+                        rutaruta.setRutaSTRING(target.toLowerCase());
+                        rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                        rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
+                        ruta.add(rutaruta);
+                        ruta.add(ruta.get(tamano));
+                    }
+
+                    else {
+                        rutaruta.setRutaSTRING(target.toLowerCase());
+                        rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        ruta.add(rutaruta);
+
+
+                        rutaruta.setRutaSTRING(target.toLowerCase());
+                        rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                        rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
+                        ruta.add(rutaruta);
+                        ruta.add(ruta.get(tamano));
+                    }
+                }
+
+            }
+
+            else {
+                rutaruta.setRutaSTRING(target.toLowerCase());
+                rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
+                ruta.add(rutaruta);
+                ruta.add(ruta.get(tamano));
+            }
+        }
+
+        else { //el largo del archivo a mover separado por / es ==0 (esto ocurre porque cuando muevo carpeta no tengo  .
+                //agregar como recueprar los archivos  de la carpeta y agregarlos a los archivos existentes a de la carpeta de destino
+                // a las carpetas de la ruta de destino hay que agregarle la carpeta que queremos mover
+                var rutaruta = new Path_21168603_ioyanedelalvarez();
+                String[] existedrive1 = target.split(":/");
+                String[] existedrive = target.split("/");
+                var drivev = existedrive1[0];
+
+                var currentDrivesletter = //obtiene las letras de todos los drives
+                        drives.stream()
+                                .map(Drive_21168603_ioyanedelalvarez::getLetter)
+                                .collect(Collectors.toList());
+                var driveamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
+                        ruta.stream()
+                                .filter(rutas -> rutas.getRutaSTRING().equals(drivev.toLowerCase() + ":" + "/"))
+                                .collect(Collectors.toList());
+
+                var tamano2 = driveamover.size() - 1;
+                var tamano = ruta.size() - 1;
+
+                var currentChaptersLUGARDESTINO =
+                        driveamover.get(tamano2).getCarpeta().stream()
+                                .map(Chapter_21168603_ioyanedelalvarez::getNombre)
+                                .collect(Collectors.toList());
+
+                var currentChaptersLUGARORIGEN =
+                        ruta.get(tamano).getCarpeta().stream()
+                                .map(Chapter_21168603_ioyanedelalvarez::getNombre)
+                                .collect(Collectors.toList());
+
+                var obteneractualizacioncarpetamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
+                        ruta.stream()
+                                .filter(rutas -> rutas.getRutaSTRING().contains(file))
+                                .collect(Collectors.toList());
+
+                var tamano22 = obteneractualizacioncarpetamover.size() - 1;
+
+                var obteneractualizacioncarpetaRECIBIR = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
+                        ruta.stream()
+                                .filter(rutas -> rutas.getRutaSTRING().equals(target))
+                                .collect(Collectors.toList());
+                var tamano3 = obteneractualizacioncarpetaRECIBIR.size() - 1;
+
+                var obtenerarchivocosas = //obtiene la carpeta que tenga el mismo nombre que file para agregarla a su destino
+                        ruta.get(tamano).getCarpeta().stream() //no funciona porque en get tamano no existe esa carpeta
+                                .filter(Chapter -> Chapter.getNombre().equals(file))
+                                .collect(Collectors.toList());
+
+            var penultima_posicion = ruta.size() - 2;
+
+    //se mueve a una carpeta lenght >1 se mueve a un drive (d:/) si el largo es 1
+                if (currentDrivesletter.contains(drivev) && existedrive.length > 1) {
+
+                    var carpetadestino = existedrive[1];
+
+
+                    //ruta1.carpeta.addAll(rutasderutas.get(tamano2).carpeta); //si d:/ contuene la carpeta de destino y si la ultima ruta abierta contiene la carpeta a mover
+                    if (currentChaptersLUGARDESTINO.contains(carpetadestino) && (ruta.get(tamano).getCarpeta().contains(file) || ruta.get(tamano).getRutaSTRING().contains(file)) && !obteneractualizacioncarpetaRECIBIR.isEmpty()) {
                         var obtenerdatoscarpeta = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
                                 ruta.stream()
                                         .filter(rutas -> rutas.getRutaSTRING().equals(actual + ":/" + file.toLowerCase() + "/"))
                                         .collect(Collectors.toList());
 
                         rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
-                        rutaruta.getCarpeta().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta()); //no funciona porque está vacia
+                        rutaruta.getCarpeta().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta());
+                        rutaruta.getCarpeta().addAll(obtenerarchivocosas);
+                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
+                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        ruta.add(rutaruta);
+                        ruta.add(ruta.get(tamano));
+
+
+                    }
+                    else if (obteneractualizacioncarpetaRECIBIR.isEmpty() && obteneractualizacioncarpetamover.isEmpty()) {
+                        rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                        rutaruta.getCarpeta().addAll(obtenerarchivocosas);
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        ruta.add(rutaruta);
+                        ruta.add(ruta.get(tamano));
+
+
+                    }
+                    else if (obteneractualizacioncarpetaRECIBIR.isEmpty() && !obteneractualizacioncarpetamover.isEmpty()) { //funciona
+                        var recuperardatosderuta =
+                                ruta.stream()
+                                        .filter(rutas->rutas.getRutaSTRING().equals(target.toLowerCase()))
+                                        .collect(Collectors.toList());
+
+                        var tamano5 = recuperardatosderuta.size()-1;
+
+
+
+                       /* rutaruta.rutaSTRING = recuperardatosderuta.get(tamano5).rutaSTRING;
+                        rutaruta.carpeta.addAll(obtenerarchivocosas);
+                        rutaruta.carpeta.addAll(recuperardatosderuta.get(tamano5).getCarpeta());
+                        rutaruta.archivo.addAll(recuperardatosderuta.get(tamano5).getArchivo());
+                        rutaruta.usuariocarpeta = (recuperardatosderuta.get(tamano5).getUsuariocarpeta());
+                        ruta.add(rutaruta);*/
+
+
+                        rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                        rutaruta.getCarpeta().addAll(obteneractualizacioncarpetamover.get(tamano22).getCarpeta());
+                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        ruta.add(rutaruta);
+                        ruta.add(ruta.get(tamano));
+
+                    }
+                    else {
+                        if (ruta.get(tamano).getCarpeta().contains(file) && !obteneractualizacioncarpetamover.isEmpty()){
+                            var obtenerdatoscarpeta = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
+                                    ruta.stream()
+                                            .filter(rutas -> rutas.getRutaSTRING().equals(actual + ":/" + file.toLowerCase() + "/"))
+                                            .collect(Collectors.toList());
+
+                            rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                            rutaruta.getCarpeta().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta()); //no funciona porque está vacia
+                            rutaruta.getCarpeta().addAll(obtenerarchivocosas);
+                            rutaruta.getArchivo().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
+                            rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
+                            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                            ruta.add(rutaruta);
+                            ruta.add(ruta.get(tamano));
+
+                        }
+
+                        if((ruta.get(tamano).getRutaSTRING().contains(file) && !obteneractualizacioncarpetamover.isEmpty()) && !obteneractualizacioncarpetaRECIBIR.isEmpty()) {
+                            var borrar_ultimo = ruta.get(tamano).getRutaSTRING().split("/"); //hace lista de string[]
+                            var largototal = borrar_ultimo.length - 1;
+                            String[] copiaderutasinultimoelem = Arrays.copyOf(borrar_ultimo, largototal);
+                            String nuevaruta = String.join("/", copiaderutasinultimoelem);
+                            String nuevarutaReArmada = nuevaruta + "/";
+
+                            var filtro_buscandoRutas =
+                                    ruta.stream()
+                                            .filter(rutas -> rutas.getRutaSTRING().equals(nuevarutaReArmada)) //buscan las rutas que son iguales a la que se le quito el ultimo elemento
+                                            .collect(Collectors.toList());
+                            var tamano4 = filtro_buscandoRutas.size()-1;
+
+                            rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                            rutaruta.getCarpeta().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta()); //no funciona porque está vacia
+                            rutaruta.getCarpeta().addAll(filtro_buscandoRutas.get(tamano4).getCarpeta());
+                            rutaruta.getArchivo().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
+                            rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
+                            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                            ruta.add(rutaruta);
+                            ruta.add(ruta.get(tamano));
+
+                        }
+
+
+
+                        else {
+                            rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                            rutaruta.getCarpeta().addAll(obtenerarchivocosas);//problema con recuperar carpeta
+                            rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
+                            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                            ruta.add(rutaruta);
+                            ruta.add(ruta.get(tamano));
+
+                        }
+                    }
+
+
+                }
+                if (currentDrivesletter.contains(drivev) && existedrive.length == 1 && !logueados.isEmpty()){
+                    if(!driveamover.isEmpty() && !logueados.isEmpty()){
+
+                        rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+
+                        rutaruta.getCarpeta().addAll(obtenerarchivocosas);//problema con recuperar carpeta
+                        rutaruta.getCarpeta().addAll(driveamover.get(tamano2).getCarpeta());
+
+                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
+                        rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        ruta.add(rutaruta);
+                        ruta.add(ruta.get(tamano));
+                    }
+                    else{
+
+                        rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                        rutaruta.getCarpeta().addAll(obtenerarchivocosas);//problema con recuperar carpeta
+                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        ruta.add(rutaruta);
+                        ruta.add(ruta.get(tamano));
+
+                    }
+                }
+            }
+        }
+
+    /**
+     *  FUNCION 11 MOVE Método para mover un archivo o carpeta desde una ruta origen a una ruta destino. La operación de mover elimina el contenido desde la ruta origen.
+     * @param file archivo a mover
+     * @param target lugar de destino
+     */
+    public void move(String file, String target) {
+        if (!logueados.isEmpty()) {
+            if (file.contains(".")) {
+                String[] file1 = file.split("\\.");
+                var rutaruta = new Path_21168603_ioyanedelalvarez();
+                var ruta1 = new Path_21168603_ioyanedelalvarez();
+                //caso de mover a otro drive
+                String[] existedrive1 = target.split(":/");
+                String[] existedrive = target.split("/");
+                var drivev = existedrive1[0];
+
+                //conseguimos la penultima posición del registro de ruta
+                int penultima_posicion = ruta.size() - 2;
+
+
+                var currentDrivesletter = //obtiene las letras de todos los drives
+                        drives.stream()
+                                .map(Drive_21168603_ioyanedelalvarez::getLetter)
+                                .collect(Collectors.toList());
+
+                var driveamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
+                        ruta.stream()
+                                .filter(rutas -> rutas.getRutaSTRING().equals(drivev.toLowerCase() + ":" + "/"))
+                                .collect(Collectors.toList());
+
+                var tamano2 = driveamover.size() - 1;
+                var tamano = ruta.size() - 1;
+
+                String[] tituloyextension = file.split("\\.");
+                var titulo = tituloyextension[0];//titulo del archivo
+                var extension = tituloyextension[1]; //extension del archivo
+
+                //Consigue los datos del archivo
+                var obtenerarchivocosas =
+                        ruta.get(tamano).getArchivo().stream()
+                                .filter(File -> File.getNombre().equals(titulo) && File.getExtension().equals("." + extension))
+                                .collect(Collectors.toList());
+
+                //recupera los datos de la ruta de destino
+                var recuperardatosderuta =
+                        ruta.stream()
+                                .filter(rutas -> rutas.getRutaSTRING().equals(target.toLowerCase()))
+                                .collect(Collectors.toList());
+
+                //obtiene las carpetas del destino
+                var currentArchivosSINARCHIVOAMOVER = //archivos actuales sin el archivo que se movio
+                        ruta.get(tamano).getArchivo().stream()
+                                .filter(File -> !File.getNombre().equals(titulo) && !File.getExtension().equals("." + extension))
+                                .collect(Collectors.toList());
+
+                var currentChapters =
+                        driveamover.get(tamano2).getCarpeta().stream()
+                                .map(Chapter_21168603_ioyanedelalvarez::getNombre)
+                                .collect(Collectors.toList());
+
+                var currentFiles =
+                        driveamover.get(tamano2).getCarpeta().stream()
+                                .map(Chapter_21168603_ioyanedelalvarez::getNombre)
+                                .collect(Collectors.toList());
+
+                //caso nunca abri esa ruta, por lo tanto debo saber si existe el drive letra y si existe la carpeta
+                //cuando hay drive y una carpeta, ejemplo: "c:/folder1/"
+                if (currentDrivesletter.contains(drivev) && existedrive.length > 1) {
+
+                    var carpetadestino = existedrive[1];
+
+
+                    //ruta1.carpeta.addAll(rutasderutas.get(tamano2).carpeta); //si d:/ contuene la carpeta de destino
+                    if (currentChapters.contains(carpetadestino)) {
+                        //caso donde nunca se trabajo con d:/carpeta por lo tanto todos sus listas son vacias
+                        if (recuperardatosderuta.isEmpty()) {
+                            rutaruta.setRutaSTRING(target.toLowerCase());
+                            rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                            //rutaruta.archivo.addAll(recuperardatosderuta.get(tamano2).getArchivo());
+                            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                            //rutaruta.carpeta = new ArrayList<>();
+
+                            ruta.add(rutaruta);
+
+
+
+                            ruta1.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
+                            ruta1.setUsuariocarpeta(ruta.get(tamano).getUsuariocarpeta());
+                            ruta1.setArchivo(currentArchivosSINARCHIVOAMOVER);
+                            ruta1.setCarpeta(ruta.get(tamano).getCarpeta());
+                            ruta.add(ruta1);
+
+
+                        } else { //caso cuando existe una ruta en la que se trabajo el d:/carpeta
+                            rutaruta.setRutaSTRING(target.toLowerCase());
+                            rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                            rutaruta.getArchivo().addAll(recuperardatosderuta.get(tamano2).getArchivo());
+                            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                            rutaruta.setCarpeta(recuperardatosderuta.get(tamano2).getCarpeta());
+                            ruta.add(rutaruta);
+
+
+
+                            ruta1.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
+                            ruta1.setUsuariocarpeta(ruta.get(tamano).getUsuariocarpeta());
+                            ruta1.setArchivo(currentArchivosSINARCHIVOAMOVER);
+                            ruta1.setCarpeta(ruta.get(tamano).getCarpeta());
+                            ruta.add(ruta1);
+                        }
+
+                    }
+
+
+                    //caso donde quiero mover a d:/ sin carpeta
+                    else if (currentDrivesletter.contains(drivev) && existedrive.length == 1) {
+                        rutaruta.setRutaSTRING(target.toLowerCase());
+                        rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                        rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
+                        ruta.add(rutaruta);
+
+
+                        ruta1.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
+                        ruta1.setUsuariocarpeta(ruta.get(tamano).getUsuariocarpeta());
+                        ruta1.setArchivo(currentArchivosSINARCHIVOAMOVER);
+                        ruta1.setCarpeta(ruta.get(tamano).getCarpeta());
+                        ruta.add(ruta1);
+                    }
+                    else { // se mueve a un d:/carpeta1/, osea, que puedo recuperar datos de esta de otra forma que a la que hice arriba
+
+                        if(recuperardatosderuta.size()>=1){
+                            rutaruta.setRutaSTRING(target.toLowerCase());
+                            rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                            rutaruta.getArchivo().addAll(recuperardatosderuta.get(tamano2).getArchivo());
+                            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                            rutaruta.setCarpeta(recuperardatosderuta.get(tamano2).getCarpeta());
+                            ruta.add(rutaruta);
+
+
+                            ruta1.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
+                            ruta1.setUsuariocarpeta(ruta.get(tamano).getUsuariocarpeta());
+                            ruta1.setArchivo(currentArchivosSINARCHIVOAMOVER);
+                            ruta1.setCarpeta(ruta.get(tamano).getCarpeta());
+                            ruta.add(ruta1);
+                        }
+
+                        else {
+                            rutaruta.setRutaSTRING(target.toLowerCase());
+                            rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                            ruta.add(rutaruta);
+
+
+                            ruta1.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
+                            ruta1.setUsuariocarpeta(ruta.get(tamano).getUsuariocarpeta());
+                            ruta1.setArchivo(currentArchivosSINARCHIVOAMOVER);
+                            ruta1.setCarpeta(ruta.get(tamano).getCarpeta());
+                            ruta.add(ruta1);
+                        }
+                    }
+
+                }
+                else {
+                    rutaruta.setRutaSTRING(target.toLowerCase());
+                    rutaruta.getArchivo().addAll(obtenerarchivocosas);
+                    rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                    rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
+                    ruta.add(rutaruta);
+
+                    ruta1.setRutaSTRING(ruta.get(tamano).getRutaSTRING());
+                    ruta1.setUsuariocarpeta(ruta.get(tamano).getUsuariocarpeta());
+                    ruta1.setArchivo(currentArchivosSINARCHIVOAMOVER);
+                    ruta1.setCarpeta(ruta.get(tamano).getCarpeta());
+                    ruta.add(ruta1);
+                }
+            }
+
+
+            //cuando no contiene punto, o sea se mueve carpeta
+            else { //el largo del archivo a mover separado por / es ==0 (esto ocurre porque cuando muevo carpeta no tengo  .
+                //agregar como recueprar los archivos  de la carpeta y agregarlos a los archivos existentes a de la carpeta de destino
+                // a las carpetas de la ruta de destino hay que agregarle la carpeta que queremos mover
+                var rutaruta = new Path_21168603_ioyanedelalvarez();
+                String[] existedrive1 = target.split(":/");
+                String[] existedrive = target.split("/");
+                var drivev = existedrive1[0];
+
+                var currentDrivesletter = //obtiene las letras de todos los drives
+                        drives.stream()
+                                .map(Drive_21168603_ioyanedelalvarez::getLetter)
+                                .collect(Collectors.toList());
+                var driveamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
+                        ruta.stream()
+                                .filter(rutas -> rutas.getRutaSTRING().equals(drivev.toLowerCase() + ":" + "/"))
+                                .collect(Collectors.toList());
+
+                var tamano2 = driveamover.size() - 1;
+                var tamano = ruta.size() - 1;
+
+                var currentChaptersLUGARDESTINO =
+                        driveamover.get(tamano2).getCarpeta().stream()
+                                .map(Chapter_21168603_ioyanedelalvarez::getNombre)
+                                .collect(Collectors.toList());
+
+                var currentChaptersLUGARORIGEN =
+                        ruta.get(tamano).getCarpeta().stream()
+                                .map(Chapter_21168603_ioyanedelalvarez::getNombre)
+                                .collect(Collectors.toList());
+
+                var obteneractualizacioncarpetamover = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
+                        ruta.stream()
+                                .filter(rutas -> rutas.getRutaSTRING().contains(file))
+                                .collect(Collectors.toList());
+
+                var tamano22 = obteneractualizacioncarpetamover.size() - 1;
+
+                var obteneractualizacioncarpetaRECIBIR = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
+                        ruta.stream()
+                                .filter(rutas -> rutas.getRutaSTRING().equals(target))
+                                .collect(Collectors.toList());
+                var tamano3 = obteneractualizacioncarpetaRECIBIR.size() - 1;
+
+                var obtenerarchivocosas = //obtiene la carpeta que tenga el mismo nombre que file para agregarla a su destino
+                        ruta.get(tamano).getCarpeta().stream() //no funciona porque en get tamano no existe esa carpeta
+                                .filter(Chapter -> Chapter.getNombre().equals(file))
+                                .collect(Collectors.toList());
+
+                //se mueve a una carpeta lenght >1 se mueve a un drive (d:/) si el largo es 1
+                if (currentDrivesletter.contains(drivev) && existedrive.length > 1) {
+
+                    var carpetadestino = existedrive[1];
+
+
+                    //ruta1.carpeta.addAll(rutasderutas.get(tamano2).carpeta); //si d:/ contuene la carpeta de destino y si la ultima ruta abierta contiene la carpeta a mover
+                    if (currentChaptersLUGARDESTINO.contains(carpetadestino) && (ruta.get(tamano).getCarpeta().contains(file) || ruta.get(tamano).getRutaSTRING().contains(file)) && !obteneractualizacioncarpetaRECIBIR.isEmpty()) {
+                        var obtenerdatoscarpeta = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
+                                ruta.stream()
+                                        .filter(rutas -> rutas.getRutaSTRING().equals(actual + ":/" + file.toLowerCase() + "/"))
+                                        .collect(Collectors.toList());
+
+                        rutaruta.setRutaSTRING(target.toLowerCase() + file + "/");
+                        rutaruta.getCarpeta().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta());
                         rutaruta.getCarpeta().addAll(obtenerarchivocosas);
                         rutaruta.getArchivo().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
                         rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
                         rutaruta.setUsuariocarpeta(getLogueados().get(0));
                         ruta.add(rutaruta);
 
-                    }
 
-                    if((ruta.get(tamano).getRutaSTRING().contains(file) && !obteneractualizacioncarpetamover.isEmpty()) && !obteneractualizacioncarpetaRECIBIR.isEmpty()) {
-                        var borrar_ultimo = ruta.get(tamano).getRutaSTRING().split("/"); //hace lista de string[]
-                        var largototal = borrar_ultimo.length - 1;
-                        String[] copiaderutasinultimoelem = Arrays.copyOf(borrar_ultimo, largototal);
-                        String nuevaruta = String.join("/", copiaderutasinultimoelem);
-                        String nuevarutaReArmada = nuevaruta + "/";
-
-                        var filtro_buscandoRutas =
-                                ruta.stream()
-                                        .filter(rutas -> rutas.getRutaSTRING().equals(nuevarutaReArmada)) //buscan las rutas que son iguales a la que se le quito el ultimo elemento
-                                        .collect(Collectors.toList());
-                        var tamano4 = filtro_buscandoRutas.size()-1;
-
-                        rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
-                        rutaruta.getCarpeta().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta()); //no funciona porque está vacia
-                        rutaruta.getCarpeta().addAll(filtro_buscandoRutas.get(tamano4).getCarpeta());
-                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
-                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
+                    } else if (obteneractualizacioncarpetaRECIBIR.isEmpty() && obteneractualizacioncarpetamover.isEmpty()) {
+                        rutaruta.setRutaSTRING(target.toLowerCase() + file + "/");
+                        rutaruta.getCarpeta().addAll(obtenerarchivocosas);
                         rutaruta.setUsuariocarpeta(getLogueados().get(0));
                         ruta.add(rutaruta);
 
+
+                    } else if (obteneractualizacioncarpetaRECIBIR.isEmpty() && !obteneractualizacioncarpetamover.isEmpty()) { //funciona
+                        var recuperardatosderuta =
+                                ruta.stream()
+                                        .filter(rutas -> rutas.getRutaSTRING().equals(target.toLowerCase()))
+                                        .collect(Collectors.toList());
+
+                        var tamano5 = recuperardatosderuta.size() - 1;
+
+                        var penultima_posicion = ruta.size() - 1;
+
+                       /* rutaruta.rutaSTRING = recuperardatosderuta.get(tamano5).rutaSTRING;
+                        rutaruta.carpeta.addAll(obtenerarchivocosas);
+                        rutaruta.carpeta.addAll(recuperardatosderuta.get(tamano5).getCarpeta());
+                        rutaruta.archivo.addAll(recuperardatosderuta.get(tamano5).getArchivo());
+                        rutaruta.usuariocarpeta = (recuperardatosderuta.get(tamano5).getUsuariocarpeta());
+                        ruta.add(rutaruta);*/
+
+
+                        rutaruta.setRutaSTRING(target.toLowerCase() + file + "/");
+                        rutaruta.getCarpeta().addAll(obteneractualizacioncarpetamover.get(tamano22).getCarpeta());
+                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        ruta.add(rutaruta);
+
+                    } else {
+                        if (ruta.get(tamano).getCarpeta().contains(file) && !obteneractualizacioncarpetamover.isEmpty()) {
+                            var obtenerdatoscarpeta = //busca las rutas que partan con la letra del drive del string entregado d:/ asi obtienes la ultima actualizacion de esa y revisa las carpetas
+                                    ruta.stream()
+                                            .filter(rutas -> rutas.getRutaSTRING().equals(actual + ":/" + file.toLowerCase() + "/"))
+                                            .collect(Collectors.toList());
+
+                            rutaruta.setRutaSTRING(target.toLowerCase() + file + "/");
+                            rutaruta.getCarpeta().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta()); //no funciona porque está vacia
+                            rutaruta.getCarpeta().addAll(obtenerarchivocosas);
+                            rutaruta.getArchivo().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
+                            rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
+                            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                            ruta.add(rutaruta);
+
+                        }
+
+                        if ((ruta.get(tamano).getRutaSTRING().contains(file) && !obteneractualizacioncarpetamover.isEmpty()) && !obteneractualizacioncarpetaRECIBIR.isEmpty()) {
+                            var borrar_ultimo = ruta.get(tamano).getRutaSTRING().split("/"); //hace lista de string[]
+                            var largototal = borrar_ultimo.length - 1;
+                            String[] copiaderutasinultimoelem = Arrays.copyOf(borrar_ultimo, largototal);
+                            String nuevaruta = String.join("/", copiaderutasinultimoelem);
+                            String nuevarutaReArmada = nuevaruta + "/";
+
+                            var filtro_buscandoRutas =
+                                    ruta.stream()
+                                            .filter(rutas -> rutas.getRutaSTRING().equals(nuevarutaReArmada)) //buscan las rutas que son iguales a la que se le quito el ultimo elemento
+                                            .collect(Collectors.toList());
+                            var tamano4 = filtro_buscandoRutas.size() - 1;
+
+                            rutaruta.setRutaSTRING(target.toLowerCase() + file + "/");
+                            rutaruta.getCarpeta().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getCarpeta()); //no funciona porque está vacia
+                            rutaruta.getCarpeta().addAll(filtro_buscandoRutas.get(tamano4).getCarpeta());
+                            rutaruta.getArchivo().addAll(obteneractualizacioncarpetaRECIBIR.get(tamano3).getArchivo());
+                            rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano).getArchivo());
+                            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                            ruta.add(rutaruta);
+
+                        } else {
+                            rutaruta.setRutaSTRING(target.toLowerCase() + file + "/");
+                            rutaruta.getCarpeta().addAll(obtenerarchivocosas);//problema con recuperar carpeta
+                            rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
+                            rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                            ruta.add(rutaruta);
+
+                        }
                     }
 
 
+                }
+                if (currentDrivesletter.contains(drivev) && existedrive.length == 1 && !logueados.isEmpty()) {
+                    if (!driveamover.isEmpty() && !logueados.isEmpty()) {
 
-                    else {
-                        rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
+                        rutaruta.setRutaSTRING(target.toLowerCase() + file + "/");
+
+                        rutaruta.getCarpeta().addAll(obtenerarchivocosas);//problema con recuperar carpeta
+                        rutaruta.getCarpeta().addAll(driveamover.get(tamano2).getCarpeta());
+
+                        rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
+                        rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                        rutaruta.setUsuariocarpeta(getLogueados().get(0));
+                        ruta.add(rutaruta);
+                    } else {
+
+                        rutaruta.setRutaSTRING(target.toLowerCase() + file + "/");
                         rutaruta.getCarpeta().addAll(obtenerarchivocosas);//problema con recuperar carpeta
                         rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
                         rutaruta.setUsuariocarpeta(getLogueados().get(0));
@@ -867,40 +1337,8 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
 
                     }
                 }
-
-
-            }
-            if (currentDrivesletter.contains(drivev) && existedrive.length == 1){
-                if(!driveamover.isEmpty()){
-
-                    rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
-
-                    rutaruta.getCarpeta().addAll(obtenerarchivocosas);//problema con recuperar carpeta
-                    rutaruta.getCarpeta().addAll(driveamover.get(tamano2).getCarpeta());
-
-                    rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
-                    rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
-                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
-                    ruta.add(rutaruta);
-                }
-                else{
-
-                    rutaruta.setRutaSTRING(target.toLowerCase()+ file + "/");
-                    rutaruta.getCarpeta().addAll(obtenerarchivocosas);//problema con recuperar carpeta
-                    rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
-                    rutaruta.setUsuariocarpeta(getLogueados().get(0));
-                    ruta.add(rutaruta);
-
-                }
             }
         }
-    }
-
-    public void move(String fie, String target){
-
-
-
-
     }
 
 
