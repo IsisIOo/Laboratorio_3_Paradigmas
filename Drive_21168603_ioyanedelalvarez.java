@@ -1,6 +1,6 @@
 package org.example;
 
-public class Drive_21168603_ioyanedelalvarez {
+public class Drive_21168603_ioyanedelalvarez implements Interfaz_drive_21168603_ioyanedelalvarez{
     private String letter;
     private String nombre;
 

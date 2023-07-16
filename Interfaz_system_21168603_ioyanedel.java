@@ -8,6 +8,11 @@ public interface Interfaz_system_21168603_ioyanedel {
     void switchDrive(String letter);
     void mkdir(String chaptername);
     void cd (String camino_seleccionado);
+    void del (String path);
+    void  addFile(File_21168603_ioyanedelalvarez archivo);
+    void copy (String file, String target);
+    void move (String file, String target);
+
 
 
 

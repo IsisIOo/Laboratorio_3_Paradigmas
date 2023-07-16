@@ -72,7 +72,12 @@ public class Menu_21168603_ioyanedelalvarez {
         System.out.println("3.- Login usuario ");
         System.out.println("4.- Desconectar un usuario ");
         System.out.println("5.- Fijar un drive ");
-        System.out.println("6.- Crear un directorio: ");
+        System.out.println("6.- Crear un directorio: "); //mkdir
+        System.out.println("7.- Cambiar de directorio"); //cd
+        System.out.println("8. Agregar archivo");
+        System.out.println("9. Eliminar archivo o carpeta");
+        System.out.println("10. Copiar archivo en un Directorio");
+        System.out.println("11. Mover archivo a un directorio");
     }
 
     private void escanear_elemento(){
@@ -121,6 +126,40 @@ public class Menu_21168603_ioyanedelalvarez {
                     sistema.mkdir(new_folder);
                     break;
 
+                case 7:
+                    Scanner n_directorio = new Scanner(System.in);
+                    System.out.println("Ingrese el nombre del directorio al que desea ir: ");
+                    String new_camino = n_directorio.nextLine();
+                    sistema.cd(new_camino);
+                    break;
+
+                case 8:
+                    sistema.crea_file();
+
+                case 9:
+                    Scanner nombrearcar = new Scanner(System.in);
+                    System.out.print("Ingrese el nombre del archivo o carpeta que desea eliminar: ");
+                    String nombre_arcarr = nombrearcar.nextLine();
+                    sistema.del(nombre_arcarr);
+                    break;
+
+                case 10:
+                    Scanner Cosa = new Scanner(System.in);
+                    Scanner Destino = new Scanner(System.in);
+                    System.out.print("Ingrese el nombre del archivo o carpeta que copiar: ");
+                    String Cosamover = Cosa.nextLine();
+                    String destinomover = Destino.nextLine();
+                    sistema.copy(Cosamover, destinomover);
+                    break;
+
+                case 11:
+                    Scanner Cosa1 = new Scanner(System.in);
+                    Scanner Destino1 = new Scanner(System.in);
+                    System.out.print("Ingrese el nombre del archivo o carpeta que mover: ");
+                    String Cosamover1 = Cosa1.nextLine();
+                    String destinomover1 = Destino1.nextLine();
+                    sistema.move(Cosamover1, destinomover1);
+                    break;
 
             }
         } catch (InputMismatchException e) {
