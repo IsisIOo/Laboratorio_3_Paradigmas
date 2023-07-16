@@ -1178,9 +1178,11 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
 
                 }
                 else {
+
                     rutaruta.setRutaSTRING(target.toLowerCase());
-                    rutaruta.getArchivo().addAll(obtenerarchivocosas);
-                    rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                    rutaruta.setArchivo(driveamover.get(tamano2).getArchivo());
+                    rutaruta.setArchivo(obtenerarchivocosas);
+
                     rutaruta.setUsuariocarpeta(getLogueados().get(0));
                     rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
                     ruta.add(rutaruta);
@@ -1242,6 +1244,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
                         ruta.stream()
                                 .filter(rutas -> rutas.getRutaSTRING().equals(target))
                                 .collect(Collectors.toList());
+
                 var tamano3 = obteneractualizacioncarpetaRECIBIR.size() - 1;
 
                 var obtenerarchivocosas = //obtiene la carpeta que tenga el mismo nombre que file para agregarla a su destino
@@ -1434,11 +1437,11 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
 
                         rutaruta.setRutaSTRING(target.toLowerCase() + file + "/");
 
-                        rutaruta.getCarpeta().addAll(obtenerarchivocosas);//problema con recuperar carpeta
+                        rutaruta.getCarpeta().addAll(obteneractualizacioncarpetamover.get(tamano22).getCarpeta());//problema con recuperar carpeta
                         rutaruta.getCarpeta().addAll(driveamover.get(tamano2).getCarpeta());
 
                         rutaruta.getArchivo().addAll(obteneractualizacioncarpetamover.get(tamano22).getArchivo());
-                        rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                        //rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
                         rutaruta.setUsuariocarpeta(getLogueados().get(0));
                         ruta.add(rutaruta);
 
