@@ -128,9 +128,32 @@ public class Menu_21168603_ioyanedelalvarez {
 
                 case 7:
                     Scanner n_directorio = new Scanner(System.in);
-                    System.out.println("Ingrese el nombre del directorio al que desea ir: ");
-                    String new_camino = n_directorio.nextLine();
-                    sistema.cd(new_camino);
+                    System.out.println("Ingrese la opcion del directorio al que desea ir: ");
+                    System.out.println("1. escriba el nombre de la carpeta");
+                    System.out.println("2. volver a la raiz");
+                    System.out.println("3. retroceder");
+                    System.out.println("4. ver posicion actual");
+                    int new_camino = n_directorio.nextInt();
+
+                    if(new_camino==1){
+                        Scanner nncarpeta = new Scanner(System.in);
+                        System.out.println("Ingrese el nombre de la carpeta: ");
+                        String nombrecarpeta = nncarpeta.nextLine();
+
+                    }
+
+                    else if (new_camino==2){
+                        sistema.cd("/");
+                    }
+
+                    else if (new_camino ==3 ){
+                        sistema.cd("..");
+                    }
+
+                    else if(new_camino==4){
+                    sistema.cd(".");
+                    }
+
                     break;
 
                 case 8:

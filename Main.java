@@ -5,12 +5,12 @@ package org.example;
 public class Main {
     public static void main(String[] args) {
 
-        /*menu_ioyanedel_21168603 menu = new menu_ioyanedel_21168603();
+        Menu_21168603_ioyanedelalvarez menu = new Menu_21168603_ioyanedelalvarez();
         while (!menu.isSalirmenu()) {
-            menu.executedemenu();}*/
+            menu.executedemenu();}
 
 
-            var filesystem = new System_21168603_ioyanedelalvarez("mi sistema");
+    /*        var filesystem = new System_21168603_ioyanedelalvarez("mi sistema");
             var pathpath = new Path_21168603_ioyanedelalvarez();
             System.out.println(filesystem);
 
@@ -99,7 +99,7 @@ public class Main {
             //System.out.println(filesystem);
 
             filesystem.move("hola.txt", "D:/");
-            System.out.println(filesystem);
+            System.out.println(filesystem);*/
 
 
 

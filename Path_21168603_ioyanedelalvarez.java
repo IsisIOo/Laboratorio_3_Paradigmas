@@ -45,7 +45,7 @@ public class Path_21168603_ioyanedelalvarez implements Interfaz_path_21168603_io
                 ", archivo=" + archivo +
                 ", usuariocarpeta='" + usuariocarpeta + '\'' +
                 ", fechaCreacion=" + fechaCreacion +
-                '}';
+                '}' + "\n";
     }
 
     /**

@@ -48,6 +48,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
      * @param capacity capcidad del dirve
      */
     public void addDrive(String letter, String name, int capacity) {
+        if(letter.length()==1){
         var Drive = new Drive_21168603_ioyanedelalvarez(letter, name, capacity);
         List<String> currentLetters = new ArrayList<>();
         for (Drive_21168603_ioyanedelalvarez disco : drives) {
@@ -57,6 +58,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
             drives.add(Drive);
         }
 
+    }
     }
 
     //RF5 TDA SYSTEM - REGISTER
@@ -100,7 +102,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
             System.out.println("El usuario ha iniciado sesión correctamente.");
         }
         else{
-            System.out.println("No existe el usuario ingresado.");
+            System.out.println("No existe el usuario ingresado o ya hay una sesion iniciada.");
         }
     }
 
