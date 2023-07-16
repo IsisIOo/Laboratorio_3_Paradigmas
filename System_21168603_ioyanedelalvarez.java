@@ -1180,8 +1180,8 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
                 else {
 
                     rutaruta.setRutaSTRING(target.toLowerCase());
-                    rutaruta.setArchivo(driveamover.get(tamano2).getArchivo());
-                    rutaruta.setArchivo(obtenerarchivocosas);
+                    rutaruta.getArchivo().addAll(driveamover.get(tamano2).getArchivo());
+                    rutaruta.getArchivo().addAll(obtenerarchivocosas);
 
                     rutaruta.setUsuariocarpeta(getLogueados().get(0));
                     rutaruta.setCarpeta(driveamover.get(tamano2).getCarpeta());
