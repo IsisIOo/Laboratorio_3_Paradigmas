@@ -97,7 +97,7 @@ public class Main {
            // filesystem.crea_file();
             //System.out.println(filesystem);
 
-            filesystem.copy("hola.txt", "D:/culo/");
+            filesystem.move("feo thomi", "D:/culo/");
             System.out.println(filesystem);
 
 
