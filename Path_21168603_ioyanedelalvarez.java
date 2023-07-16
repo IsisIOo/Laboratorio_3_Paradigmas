@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Path_21168603_ioyanedelalvarez {
+public class Path_21168603_ioyanedelalvarez implements Interfaz_path_21168603_ioyanedelalvarez{
 
     private String rutaSTRING;
     private List<Chapter_21168603_ioyanedelalvarez> carpeta;

@@ -1,6 +1,6 @@
 package org.example;
 
-public class Usuario_21168603_ioyanedelalvarez {
+public class Usuario_21168603_ioyanedelalvarez implements Interfaz_usuario_21168603_ioyanedelalvarez{
     private String nombre;
 
     /**
