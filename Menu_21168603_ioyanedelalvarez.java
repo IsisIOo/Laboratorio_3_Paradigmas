@@ -129,16 +129,17 @@ public class Menu_21168603_ioyanedelalvarez {
                 case 7:
                     Scanner n_directorio = new Scanner(System.in);
                     System.out.println("Ingrese la opcion del directorio al que desea ir: ");
-                    System.out.println("1. escriba el nombre de la carpeta");
-                    System.out.println("2. volver a la raiz");
-                    System.out.println("3. retroceder");
-                    System.out.println("4. ver posicion actual");
+                    System.out.println("1. Escriba el nombre de la carpeta.");
+                    System.out.println("2. Volver a la raiz.");
+                    System.out.println("3. Retroceder.");
+                    System.out.println("4. Quedarme en el directorio actual.");
                     int new_camino = n_directorio.nextInt();
 
                     if(new_camino==1){
                         Scanner nncarpeta = new Scanner(System.in);
                         System.out.println("Ingrese el nombre de la carpeta: ");
                         String nombrecarpeta = nncarpeta.nextLine();
+                        sistema.cd(nombrecarpeta);
 
                     }
 
@@ -158,6 +159,7 @@ public class Menu_21168603_ioyanedelalvarez {
 
                 case 8:
                     sistema.crea_file();
+                    break;
 
                 case 9:
                     Scanner nombrearcar = new Scanner(System.in);
@@ -171,6 +173,7 @@ public class Menu_21168603_ioyanedelalvarez {
                     Scanner Destino = new Scanner(System.in);
                     System.out.print("Ingrese el nombre del archivo o carpeta que copiar: ");
                     String Cosamover = Cosa.nextLine();
+                    System.out.println("Ingrese la ruta de destino: ");
                     String destinomover = Destino.nextLine();
                     sistema.copy(Cosamover, destinomover);
                     break;
@@ -180,6 +183,7 @@ public class Menu_21168603_ioyanedelalvarez {
                     Scanner Destino1 = new Scanner(System.in);
                     System.out.print("Ingrese el nombre del archivo o carpeta que mover: ");
                     String Cosamover1 = Cosa1.nextLine();
+                    System.out.println("Ingrese la ruta de destino: ");
                     String destinomover1 = Destino1.nextLine();
                     sistema.move(Cosamover1, destinomover1);
                     break;

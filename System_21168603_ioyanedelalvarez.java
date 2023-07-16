@@ -158,6 +158,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
             if(rutasderutas.size()>1){
                 var tamano2 = rutasderutas.size()-1;
                 ruta1.getCarpeta().addAll(rutasderutas.get(tamano2).getCarpeta());
+                ruta1.getArchivo().addAll(rutasderutas.get(tamano2).getArchivo());
             }
 
             //ruta1.carpeta= ;
@@ -625,6 +626,7 @@ public class System_21168603_ioyanedelalvarez implements Interfaz_system_2116860
                 rutaruta.setRutaSTRING(ruta.get(tamano).getRutaSTRING()); //rutaruta.rutaSTRING = ruta.get(tamano).rutaSTRING;
                 rutaruta.getCarpeta().addAll(ruta.get(tamano).getCarpeta());
                 rutaruta.setCarpeta(filtro_borrarUNAcarpeta);
+                rutaruta.getArchivo().addAll(ruta.get(tamano).getArchivo());
                 rutaruta.setUsuariocarpeta(getLogueados().get(0));
                 ruta.add(rutaruta);
             }
